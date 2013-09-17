@@ -1,5 +1,6 @@
 env
 var
+.DS_Store
 *.swp
 
 *.py[cod]
