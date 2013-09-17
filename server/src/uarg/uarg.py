@@ -7,8 +7,8 @@ from flask import Flask, json, jsonify, render_template, request, session, url_f
 
 import configuration
 
-from api.views import api
-from webui.views import web
+from views_api import api
+from views_webui import web
 
 app = Flask(__name__)
 app.register_blueprint(api)
