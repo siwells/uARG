@@ -19,30 +19,37 @@ configuration.logs(app)
 
 @app.errorhandler(401)
 def error_401(e):
-	#return render_template('401.html'), 401
-    return Markup("401 Error"), 401
+    return abort('ko', 401, 'something went wrong')
 
 @app.errorhandler(403)
 def error_403(e):
-	#return render_template('403.html'), 403
-    return Markup("403 Error"), 403
+    return abort('ko', 403, 'something went wrong')
 
 @app.errorhandler(404)
 def error_404(e):
-    if 'text/html' in request.headers.get("Accept", ""):
-        return Markup("404 Error"), 404
-    else:
-        return jsonify( {'status':'ko', 'statusCode': 404, 'message':'something went wrong'} )
+    return abort('ko', 404, 'something went wrong')
 
 @app.errorhandler(410)
 def error_410(e):
-	#return render_template('410.html'), 410
-    return Markup("410 Error"), 410
+    return abort('ko', 410, 'something went wrong')
 
 @app.errorhandler(500)
 def error_500(e):
-	#return render_template('500.html'), 500
-    return Markup("500 Error"), 500
+    return abort('ko', 500, 'something went wrong')
+
+def abort(status, statuscode, msg):
+    """
+    Check content type in the header and return error message in appropriate format.
+    Defaults to JSON
+
+    Should use e.g. return render_template('401.html'), 401
+    when templates are ready
+    """
+    if 'text/html' in request.headers.get("Accept", ""):
+        return Markup(str(statuscode)+" "+msg), statuscode
+    else:
+        return jsonify( {'status':status, 'statuscode': statuscode, 'message':msg} )
+
 
 if __name__ == '__main__':
     app.run(
