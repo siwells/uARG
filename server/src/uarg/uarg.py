@@ -17,6 +17,10 @@ app.register_blueprint(web)
 configuration.init(app)
 configuration.logs(app)
 
+@app.errorhandler(400)
+def error_400(e):
+    return abort('ko', 400, 'Bad Request: Browser (or proxy) sent something that could not be understood')
+
 @app.errorhandler(401)
 def error_401(e):
     return abort('ko', 401, 'something went wrong')
