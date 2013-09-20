@@ -16,4 +16,15 @@ def root():
 
     return jsonify( response )
 
+@api.route('/claim')
+def claim():
+    """
+    """
+
+    msg = "CLAIM - This should return basic information about using the API from this route onwards"
+    response = {'status':'ok', 'statusCode': 200, 'message':msg}
+
+    current_app.logger.warn("CLAIM ROUTE")
+
+    return jsonify( response )
 
