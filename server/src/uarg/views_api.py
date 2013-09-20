@@ -24,14 +24,30 @@ def claim(claim_id = None):
     msg = None
 
     if request.method == 'GET':
+        """
+        Retrieves the claim identified by claim_id
+        """
         msg = "GET /api/claim"+claim_id
         current_app.logger.info(msg)
 
     elif request.method == 'PUT':
+        """
+        Checks whether a claim matches the supplied claim_id. If so, replaces the 
+        existing claim with the supplied claim JSON doc.
+        """
         msg = "PUT /api/claim/"+claim_id
         current_app.logger.info(msg)
 
+        print request.json
+
     elif request.method == 'POST':
+        """
+        Takes the supplied claim document and creates a new claim.
+        Claim JSON doc must contain the following keys:
+            content
+
+        Returns a response containing the UUID for the new claim
+        """
         msg = "POST /api/claim"
         current_app.logger.info(msg)
 
