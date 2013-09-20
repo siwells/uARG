@@ -28,3 +28,16 @@ def claim():
 
     return jsonify( response )
 
+@api.route('/claims')
+def claims():
+    """
+    """
+
+    msg = "CLAIMS - Retrieve claims from server"
+    response = {'status':'ok', 'statusCode': 200, 'message':msg}
+
+    current_app.logger.warn("CLAIMS ROUTE")
+
+    return jsonify( response )
+
+
