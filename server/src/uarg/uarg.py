@@ -29,6 +29,10 @@ def error_403(e):
 def error_404(e):
     return abort('ko', 404, 'something went wrong')
 
+@app.errorhandler(405)
+def error_405(e):
+    return abort('ko', 405, 'Method Not Allowed for the requested URL')
+
 @app.errorhandler(410)
 def error_410(e):
     return abort('ko', 410, 'something went wrong')
