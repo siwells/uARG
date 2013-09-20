@@ -16,14 +16,4 @@ def root():
 
     return jsonify( response )
 
-@api.route('/log')
-def log():
-    """
-    """
 
-    msg = "LOGS"
-    response = {'status':'ok', 'statusCode': 200, 'message':msg}
-
-    current_app.logger.warn("LOG ROUTE")
-
-    return jsonify( response )
