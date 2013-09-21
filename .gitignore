@@ -2,6 +2,7 @@ env
 var
 .DS_Store
 *.swp
+*.swo
 
 *.py[cod]
 
