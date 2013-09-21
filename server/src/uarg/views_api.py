@@ -44,7 +44,7 @@ def claim(claim_id = None):
         """
         Takes the supplied claim document and creates a new claim.
         Claim JSON doc must contain the following keys:
-            content
+            [1] content
 
         Returns a response containing the UUID for the new claim
         """
@@ -57,16 +57,16 @@ def claim(claim_id = None):
 
     return jsonify( response )
 
-@api.route('/claims')
-def claims():
+@api.route('/dialogues')
+def dialogues():
     """
     Requires support for retrieving with offset + rows
     """
 
-    msg = "CLAIMS - Retrieve claims from server"
+    msg = "DIALOGUES - Retrieve claims from server"
     response = {'status':'ok', 'statusCode': 200, 'message':msg}
 
-    current_app.logger.warn("CLAIMS ROUTE")
+    current_app.logger.info(msg)
 
     return jsonify( response )
 
