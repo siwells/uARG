@@ -15,9 +15,9 @@ def root():
 
     return jsonify( response )
 
-@api.route('/claim/<claim_id>', methods=['GET', 'PUT'])
-@api.route('/claim', methods=['POST'])
-def claim(claim_id = None):
+@api.route('/dialogue/<dialogue_id>', methods=['GET'])
+@api.route('/dialogue', methods=['POST'])
+def dialogue(dialogue_id = None):
     """
     """
 
@@ -25,30 +25,23 @@ def claim(claim_id = None):
 
     if request.method == 'GET':
         """
-        Retrieves the claim identified by claim_id
+        Retrieves the dialogue identified by dialogue_id
         """
-        msg = "GET /api/claim"+claim_id
+        msg = "GET /api/dialogue"+dialogue_id
         current_app.logger.info(msg)
 
-    elif request.method == 'PUT':
-        """
-        Checks whether a claim matches the supplied claim_id. If so, replaces the 
-        existing claim with the supplied claim JSON doc.
-        """
-        msg = "PUT /api/claim/"+claim_id
-        current_app.logger.info(msg)
-
-        print request.json
 
     elif request.method == 'POST':
         """
-        Takes the supplied claim document and creates a new claim.
-        Claim JSON doc must contain the following keys:
-            [1] content
+        Takes the supplied dialogue root JSON doc and creates a new dialogue.
+        
+        Dialogue root JSON doc must contain the following keys:
+            [1] root_msg
+            [2] root_msg_type
 
-        Returns a response containing the UUID for the new claim
+        Returns a response containing the UUID for the new dialogue
         """
-        msg = "POST /api/claim"
+        msg = "POST /api/dialogue"
         current_app.logger.info(msg)
 
         print request.json
