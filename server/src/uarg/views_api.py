@@ -36,27 +36,41 @@ def dialogue(dialogue_id = None):
 
     elif request.method == 'POST':
         """
-        Takes the supplied dialogue root JSON doc and creates a new dialogue.
+        Takes the supplied dialogue root JSON doc and creates a new dialogue. 
         
-        Dialogue root JSON doc must contain the following keys:
+        2 types of dialogue root are allowed: 
+            [1] a root created by the user
+            [2] a root in respose to an existing resource that is identified by URL
+        
+        A type 1 root JSON doc must contain the following keys:
             [1] msg
-            [2] type
+            [2] msg_type
+
+        A type 2 root JSON doc must contain the following keys:
+            [1] resp_txt
+            [2] resp_type
+            [3] src_url
+            [4] src_txt
 
         Returns a response containing the UUID for the new dialogue
         """
-        msg = None
+        msg_txt = None
         msg_type = None
+        resp_txt = None
+        resp_type = None
+        src_url = None
+        src_txt = None
 
         data = request.json
-        if all(key in data for key in ('msg','type')):
-            msg = data.get('msg')
-            msg_type = data.get('type')
+        if all(key in data for key in ('msg_txt','msg_type')):
+            msg_txt = data.get('msg_txt')
+            msg_type = data.get('msg_type')
 
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created with root text 'blah blah blah'"
 
-        elif all(key in data for key in ('resp', 'resp_txt', 'resp_type', 'src_url', 'src_txt')):
-            resp = data.get('resp')
+
+        elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):
             resp_txt = data.get('resp_txt')
             resp_type = data.get('resp_type')
             src_url = data.get('src_url')
