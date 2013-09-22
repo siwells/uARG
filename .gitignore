@@ -3,6 +3,7 @@ var
 .DS_Store
 *.swp
 *.swo
+*.swn
 
 *.py[cod]
 
