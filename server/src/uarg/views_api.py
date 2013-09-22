@@ -12,7 +12,7 @@ def root():
     response_msg = "GET /api/ - This should return basic information about using the API from this route onwards"
     response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
 
-    current_app.logger.warn( response )
+    current_app.logger.info( response )
 
     return jsonify( response )
 
