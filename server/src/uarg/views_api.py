@@ -15,12 +15,12 @@ def root():
 
     return jsonify( response )
 
+
 @api.route('/dialogue/<dialogue_id>', methods=['GET'])
 @api.route('/dialogue', methods=['POST'])
 def dialogue(dialogue_id = None):
     """
     """
-
     response_msg = None
     payload = {}
     status = 'ok'
@@ -119,7 +119,6 @@ def dialogues():
         date
         activity
     """
-
     payload = {'dialogues':[{'dialogue_id':'123432245653', 'root_txt':'bees are nice'}, {'dialogue_id':'54323454245653', 'root_txt':'bees are really nice'}]}
 
     msg = "List of dialogues retrieved successfully from server"
