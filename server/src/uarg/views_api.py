@@ -8,8 +8,9 @@ api = Blueprint("api", __name__, url_prefix='/api')
 def root():
     """
     """
+    payload = {}
     response_msg = "GET /api/ - This should return basic information about using the API from this route onwards"
-    response = {'status':'ok', 'statusCode': 200, 'message':response_msg}
+    response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
 
     current_app.logger.warn( response )
 
