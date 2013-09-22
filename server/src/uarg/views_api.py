@@ -91,6 +91,21 @@ def dialogue(dialogue_id = None):
 
     return jsonify( response )
 
+
+@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>', methods=['GET'])
+@api.route('/dialogue/<dialogue_id>/utterance', methods=['POST'])
+def utterance(dialogue_id = None, utterance_id = None):
+    """
+    """
+    response_msg = "GET /api/ - This should return basic information about using the API from this route onwards"
+    payload = {}
+    response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
+
+    current_app.logger.info( response )
+
+    return jsonify( response )
+
+
 @api.route('/dialogues')
 def dialogues():
     """
