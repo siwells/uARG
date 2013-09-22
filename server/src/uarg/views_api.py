@@ -94,11 +94,21 @@ def dialogue(dialogue_id = None):
 @api.route('/dialogues')
 def dialogues():
     """
-    Requires support for retrieving with offset + rows
+    Requires support for retrieving with the following arguments:
+        count
+        offset
+        user_id
+        order
+        tags
+        ratings
+        date
+        activity
     """
 
-    msg = "DIALOGUES - Retrieve claims from server"
-    response = {'status':'ok', 'statusCode': 200, 'message':msg}
+    payload = {'dialogues':[{'dialogue_id':'123432245653', 'root_txt':'bees are nice'}, {'dialogue_id':'54323454245653', 'root_txt':'bees are really nice'}]}
+
+    msg = "List of dialogues retrieved successfully from server"
+    response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':payload}
 
     current_app.logger.info(msg)
 
