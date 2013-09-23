@@ -1,0 +1,72 @@
+
+NB. All dialogue elements have a timestamp (server side creation time), a URI, and a UUID
+
+    api/dialogues    - GET   :: return list of dialogues
+                                Arguments:
+                                    count
+                                    offset
+                                    user_id
+                                    order
+                                    tag?
+                                    rating?
+                                    date
+                                    activity
+
+    api/dialogue    - POST  :: create new dialogue by either: 
+                                [1] supplying a new dialogue root:
+                                    {   'msg':'some shit...', 'msg_type':'' }
+
+                                [2] responding to an existing textual resource on the web:
+                                    { 
+                                        'response_text':'some shit ...', 
+                                        'response_type':'type of response, e.g. agree, disagree', 
+                                        'source_url':'http://...', 
+                                        'source_text':'some shit...' 
+                                    }
+                                returns: uri & id of new resource
+
+
+    api/dialogue/<dialogue_id>  - GET :: return specific dialogue
+
+    api/dialogue/<dialogue_id>/utterances   - GET :: Return list (sequence) of utterances for this dialogue
+                                Arguments:
+                                    count
+                                    offset
+                                    user_id
+                                    order
+                                    tag?
+                                    rating?
+                                    date
+                                    activity
+
+    api/dialogue/<dialogue_id>/utterance/   - POST :: supply a new utterance in the dialogue:
+                                    {
+                                        'content':'some shit ...'
+
+                                    }
+                                returns: uri & id (incremental starting with #1 as root of dialogue) of new resource
+
+    api/dialogue/<dialogue_id>/utterance/<utterance_id> - GET :: return specific utterance
+
+    api/dialogue/<dialogue_id>/utterance/<utterance_id>/response - POST :: supply a response to a specific utterance:
+                                    { 
+                                        'response_text':'some shit ...', 
+                                        'response_type':'type of response, e.g. agree, disagree', 
+                                    }
+
+    api/dialogue/<dialogue_id>/utterance/<utterance_id>/responses - GET :: Returns all responses to this utterance
+                                Arguments e.g. 
+                                    type="challenge|defense|support|attack"
+                                    count
+                                    offset
+                                    user_id
+                                    order
+                                    tag?
+                                    rating?
+                                    date
+                                    activity
+
+
+
+    api/user/<user_id>
+

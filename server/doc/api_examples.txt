@@ -1,0 +1,14 @@
+
+
+Create a dialogue (1):
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"msg_txt":"bees are nice", "msg_type":"claim"}' -X POST | jq '.'
+
+
+Create a dialogue (2):
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"resp_txt":"bees are nice", "resp_type":"claim", "src_url":"http://sdfdfsd.com", "src_txt":"bees are dying"}' -X POST | jq '.'
+
+
+And retrieve it:
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/s -X GET | jq '.'
+
+
