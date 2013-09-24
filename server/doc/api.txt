@@ -1,6 +1,13 @@
 
 NB. All dialogue elements have a timestamp (server side creation time), a URI, and a UUID
 
+
+Dialogue Routes
+===============
+
+These routes are designed to enable data about dialogues to be retrieved
+
+
     api/dialogues    - GET   :: return list of dialogues
                                 Arguments:
                                     count
@@ -66,7 +73,26 @@ NB. All dialogue elements have a timestamp (server side creation time), a URI, a
                                     date
                                     activity
 
+User Routes
+===========
+
+These routes are designed to enable public information about an individual user to be retrieved, e.g. the dialogues that a user has participated in.
 
 
     api/user/<user_id>
+
+
+Account Routes
+==============
+Used by a user to retrieve & update their own account information. Data retrieved through this route is restricted to only data associated with the account of the logged in user.
+
+    api/account/
+
+
+Search Routes
+=============
+
+Designed to suport full-text based discovery within the dialogues.
+
+    api/search
 
