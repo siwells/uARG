@@ -8,7 +8,7 @@ Dialogue Routes
 These routes are designed to enable data about dialogues to be retrieved
 
 
-    api/dialogues    - GET   :: return list of dialogues
+api/dialogues    - GET   :: return list of dialogues
                                 Arguments:
                                     count
                                     offset
@@ -19,7 +19,7 @@ These routes are designed to enable data about dialogues to be retrieved
                                     date
                                     activity
 
-    api/dialogue    - POST  :: create new dialogue by either: 
+api/dialogue    - POST  :: create new dialogue by either: 
                                 [1] supplying a new dialogue root:
                                     {   'msg':'some shit...', 'msg_type':'' }
 
@@ -33,9 +33,9 @@ These routes are designed to enable data about dialogues to be retrieved
                                 returns: uri & id of new resource
 
 
-    api/dialogue/<dialogue_id>  - GET :: return specific dialogue
+api/dialogue/<dialogue_id>  - GET :: return specific dialogue
 
-    api/dialogue/<dialogue_id>/utterances   - GET :: Return list (sequence) of utterances for this dialogue
+api/dialogue/<dialogue_id>/utterances   - GET :: Return list (sequence) of utterances for this dialogue
                                 Arguments:
                                     count
                                     offset
