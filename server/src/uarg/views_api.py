@@ -98,10 +98,25 @@ def dialogue(dialogue_id = None):
 def utterance(dialogue_id = None, utterance_id = None):
     """
     """
-    response_msg = "GET /api/ - This should return basic information about using the API from this route onwards"
+    response_msg = None
     payload = {}
-    response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
+    status = 'ok'
+    status_code = 200
 
+    utterance_txt = None
+    speaker = None
+    timestamp = None
+    response_to = None
+
+    if request.method == 'GET':
+        """
+        Retrieves the dialogue identified by dialogue_id
+        """
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
+        payload = { 'dialogue_id':dialogue_id, 'utterance_id':utterance_id, 'utterance_txt':utterance_txt, 'speaker':speaker, 'timestampt':timestamp, 'response_to':response_to }
+
+
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
     current_app.logger.info( response )
 
     return jsonify( response )
