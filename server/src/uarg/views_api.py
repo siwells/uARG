@@ -130,3 +130,29 @@ def dialogues():
     return jsonify( response )
 
 
+@api.route('/dialogues/count')
+def dialogue_count():
+    """
+    Return number of dialogues
+
+    Requires support for retrieving with the following arguments:
+        count
+        offset
+        user_id
+        order
+        tags
+        ratings
+        date
+        activity
+    """
+    dialogue_count = 0
+    payload = { "count": dialogue_count}
+
+    response_msg = "Number of dialogues retrieved successfully from server"
+    response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
+
+    current_app.logger.info(response_msg)
+
+    return jsonify( response )
+
+
