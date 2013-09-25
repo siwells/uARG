@@ -110,11 +110,28 @@ def utterance(dialogue_id = None, utterance_id = None):
 
     if request.method == 'GET':
         """
-        Retrieves the dialogue identified by dialogue_id
+        Retrieves a specfied utterance from a specifed dialogue identified by utterance_id & dialogue_id
         """
         response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
         payload = { 'dialogue_id':dialogue_id, 'utterance_id':utterance_id, 'utterance_txt':utterance_txt, 'speaker':speaker, 'timestampt':timestamp, 'response_to':response_to }
 
+    elif request.method == 'POST':
+        """
+        Post an utterance to the specified dialogue identified by dialogue_id
+        """
+        data = request.json
+        if all(key in data for key in ('msg_txt','msg_type', 'in_response_to')):
+            msg_txt = data.get('msg_txt')
+            msg_type = data.get('msg_type')
+            in_response_to = data.get('in_response_to')
+            
+            response_msg = "POST /api/dialogue/"+dialogue_id+"/utterance/"
+            payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID'}
+
+        else:
+            status = 'ko'
+            status_code = 400
+            response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
     current_app.logger.info( response )
