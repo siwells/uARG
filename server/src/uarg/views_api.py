@@ -93,7 +93,7 @@ def dialogue(dialogue_id = None):
     return jsonify( response )
 
 
-@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>', methods=['GET'])
+@api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>', methods=['GET'])
 def utterance(dialogue_id = None, utterance_id = None):
     """
     """
@@ -111,7 +111,7 @@ def utterance(dialogue_id = None, utterance_id = None):
         """
         Retrieves a specfied utterance from a specifed dialogue identified by utterance_id & dialogue_id
         """
-        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id
         payload = { 'dialogue_id':dialogue_id, 'utterance_id':utterance_id, 'utterance_txt':utterance_txt, 'speaker':speaker, 'timestampt':timestamp, 'response_to':response_to }
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
@@ -120,7 +120,7 @@ def utterance(dialogue_id = None, utterance_id = None):
     return jsonify( response )
 
 
-@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>/response', methods=['POST'])
+@api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>/response', methods=['POST'])
 def response(dialogue_id = None, utterance_id = None):
     """
     """
@@ -144,7 +144,7 @@ def response(dialogue_id = None, utterance_id = None):
             msg_type = data.get('msg_type')
             in_response_to = data.get('in_response_to')
             
-            response_msg = "POST /api/dialogue/"+dialogue_id+"/utterance/"
+            response_msg = "POST /api/dialogue/"+dialogue_id+"/transcript/"
             payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID'}
 
         else:
@@ -158,7 +158,7 @@ def response(dialogue_id = None, utterance_id = None):
     return jsonify( response )
 
 
-@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>/responses', methods=['GET'])
+@api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>/responses', methods=['GET'])
 def responses(dialogue_id = None, utterance_id = None):
     """
     """
@@ -173,7 +173,7 @@ def responses(dialogue_id = None, utterance_id = None):
     response_to = None
 
     if request.method == 'GET':
-        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id+"/responses"
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/responses"
         payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'1', 'utterance_txt':'blah blah blah'}]}
 
     else:
