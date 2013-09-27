@@ -158,6 +158,33 @@ def response(dialogue_id = None, utterance_id = None):
     return jsonify( response )
 
 
+@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>/responses', methods=['GET'])
+def responses(dialogue_id = None, utterance_id = None):
+    """
+    """
+    response_msg = None
+    payload = {}
+    status = 'ok'
+    status_code = 200
+
+    utterance_txt = None
+    speaker = None
+    timestamp = None
+    response_to = None
+
+    if request.method == 'GET':
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id+"/responses"
+        payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'1', 'utterance_txt':'blah blah blah'}]}
+
+    else:
+        status = 'ko'
+        status_code = 400
+        response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
+
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
+    current_app.logger.info( response )
+
+    return jsonify( response )
 
 
 @api.route('/dialogues')
