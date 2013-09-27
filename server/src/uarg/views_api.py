@@ -189,7 +189,7 @@ def responses(dialogue_id = None, utterance_id = None):
 
     if request.method == 'GET':
         response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/responses"
-        payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'9237498321', 'utterance_txt':'blah blah blah'}]}
+        payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'9237498321', 'utterance_txt':'blah blah blah', 'time_stamp':None}]}
 
     else:
         status = 'ko'
