@@ -20,6 +20,9 @@ api/dialogue/<dialogue_id>
 And retrieve it:
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/s -X GET | jq '.'
 
+Or add a new utterance to the transcript for the specified dialogue:
+    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"msg_txt":"wasps are not nice", "msg_type":"assertion"}' -X POST | jq '.'
+
 
 api/dialogues
 =============
@@ -28,18 +31,25 @@ You can also retrieve a list of dialogues:
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogues -X GET | jq '.'
 
 
-api/dialogue/<dialogue_id>/utterance/<utterance_id>
+api/dialogue/<dialogue_id>/transcript/<utterance_id>
 ===================================================
 
 Retrieve a specific utterance from a specific dialogue:
-    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/utterance/u -X GET | jq '.'
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/transcript/t -X GET | jq '.'
 
 
-api/dialogue/<dialogue_id>/utterance/response
+api/dialogue/<dialogue_id>/transcript/response
 =============================================
 
 Post a new utterance to an existing dialogue
-    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/utterance/u/response -d '{"msg_txt":"a new utterance", "msg_type":"support", "in_response_to":"123432345"}' -X POST | jq '.'
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/transcript/t/response -d '{"msg_txt":"a new utterance", "msg_type":"support"}' -X POST | jq '.'
+
+
+api/dialogue/<dialogue_id>/transcript/t/responses
+=================================================
+
+Retrieve all of the responses to a specific utterance within a specific dialogue:
+    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/s/transcript/t/responses -X GET | jq '.'
 
 
 api/dialogues/count
