@@ -17,7 +17,6 @@ def root():
     return jsonify( response )
 
 
-@api.route('/dialogue/<dialogue_id>', methods=['GET'])
 @api.route('/dialogue', methods=['POST'])
 def dialogue(dialogue_id = None):
     """
@@ -27,15 +26,7 @@ def dialogue(dialogue_id = None):
     status = 'ok'
     status_code = 200
 
-    if request.method == 'GET':
-        """
-        Retrieves the dialogue identified by dialogue_id
-        """
-        response_msg = "GET /api/dialogue"+dialogue_id
-        payload = { 'transcript':[{'idx':'1', 'speaker':{'id':'12343212332', 'name':'Simon Wells'}, 'msg':'bees are nice', 'msg_type':'claim'}, {'idx':'2', 'speaker':{'id':'32143212223', 'name':'Thomas Wells'}, 'msg':'yes they are', 'msg_type':'agree'}]}
-
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         """
         Takes the supplied dialogue root JSON doc and creates a new dialogue. 
         
@@ -93,6 +84,31 @@ def dialogue(dialogue_id = None):
     return jsonify( response )
 
 
+@api.route('/dialogue/<dialogue_id>', methods=['GET'])
+def dialogue_id(dialogue_id = None):
+    """
+    """
+    response_msg = None
+    payload = {}
+    status = 'ok'
+    status_code = 200
+
+    if request.method == 'GET':
+        """
+        Retrieves the dialogue identified by dialogue_id
+        """
+        response_msg = "GET /api/dialogue"+dialogue_id
+        payload = { 'transcript':[{'idx':'1', 'speaker':{'id':'12343212332', 'name':'Simon Wells'}, 'msg':'bees are nice', 'msg_type':'claim'}, {'idx':'2', 'speaker':{'id':'32143212223', 'name':'Thomas Wells'}, 'msg':'yes they are', 'msg_type':'agree'}]}
+
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
+    current_app.logger.info(response)
+
+    return jsonify( response )
+
+
+
+
+
 @api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>', methods=['GET'])
 def utterance(dialogue_id = None, utterance_id = None):
     """
@@ -139,13 +155,12 @@ def response(dialogue_id = None, utterance_id = None):
         Post an utterance to the specified dialogue identified by dialogue_id
         """
         data = request.json
-        if all(key in data for key in ('msg_txt','msg_type', 'in_response_to')):
+        if all(key in data for key in ('msg_txt','msg_type')):
             msg_txt = data.get('msg_txt')
             msg_type = data.get('msg_type')
-            in_response_to = data.get('in_response_to')
             
-            response_msg = "POST /api/dialogue/"+dialogue_id+"/transcript/"
-            payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID'}
+            response_msg = "POST /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/response"
+            payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'in_response_to':utterance_id}
 
         else:
             status = 'ko'
@@ -174,7 +189,7 @@ def responses(dialogue_id = None, utterance_id = None):
 
     if request.method == 'GET':
         response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/responses"
-        payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'1', 'utterance_txt':'blah blah blah'}]}
+        payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'responses':[{'utterance_id':'9237498321', 'utterance_txt':'blah blah blah'}]}
 
     else:
         status = 'ko'
