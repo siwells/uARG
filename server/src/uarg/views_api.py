@@ -94,7 +94,6 @@ def dialogue(dialogue_id = None):
 
 
 @api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>', methods=['GET'])
-@api.route('/dialogue/<dialogue_id>/utterance', methods=['POST'])
 def utterance(dialogue_id = None, utterance_id = None):
     """
     """
@@ -115,7 +114,27 @@ def utterance(dialogue_id = None, utterance_id = None):
         response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
         payload = { 'dialogue_id':dialogue_id, 'utterance_id':utterance_id, 'utterance_txt':utterance_txt, 'speaker':speaker, 'timestampt':timestamp, 'response_to':response_to }
 
-    elif request.method == 'POST':
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
+    current_app.logger.info( response )
+
+    return jsonify( response )
+
+
+@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>/response', methods=['POST'])
+def response(dialogue_id = None, utterance_id = None):
+    """
+    """
+    response_msg = None
+    payload = {}
+    status = 'ok'
+    status_code = 200
+
+    utterance_txt = None
+    speaker = None
+    timestamp = None
+    response_to = None
+
+    if request.method == 'POST':
         """
         Post an utterance to the specified dialogue identified by dialogue_id
         """
@@ -137,6 +156,8 @@ def utterance(dialogue_id = None, utterance_id = None):
     current_app.logger.info( response )
 
     return jsonify( response )
+
+
 
 
 @api.route('/dialogues')
