@@ -32,14 +32,14 @@ api/dialogue/<dialogue_id>/utterance/<utterance_id>
 ===================================================
 
 Retrieve a specific utterance from a specific dialogue:
-    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/s/utterance/u -X GET | jq '.'
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/utterance/u -X GET | jq '.'
 
 
-api/dialogue/<dialogue_id>/utterance
-====================================
+api/dialogue/<dialogue_id>/utterance/response
+=============================================
 
 Post a new utterance to an existing dialogue
-    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/s/utterance -d '{"msg_txt":"a new utterance", "msg_type":"support", "in_response_to":"123432345"}' -X POST | jq '.'
+    $ curl  -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/d/utterance/u/response -d '{"msg_txt":"a new utterance", "msg_type":"support", "in_response_to":"123432345"}' -X POST | jq '.'
 
 
 api/dialogues/count
