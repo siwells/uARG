@@ -194,7 +194,7 @@ def responses(dialogue_id = None, utterance_id = None):
     else:
         status = 'ko'
         status_code = 400
-        response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
+        response_msg =  "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/responses failed."
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
     current_app.logger.info( response )
