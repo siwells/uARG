@@ -160,7 +160,7 @@ def response(dialogue_id = None, utterance_id = None):
             msg_type = data.get('msg_type')
             
             response_msg = "POST /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id+"/response"
-            payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'DUMMYUTTERANCEID', 'in_response_to':utterance_id}
+            payload = {'dialogue_id':'DUMMYDIALOGUEID', 'utterance_id':'NEWDUMMYUTTERANCEID', 'in_response_to':utterance_id}
 
         else:
             status = 'ko'
