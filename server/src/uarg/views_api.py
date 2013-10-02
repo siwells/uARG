@@ -4,6 +4,8 @@
 from flask import Blueprint, current_app, json, jsonify, request
 api = Blueprint("api", __name__, url_prefix='/api')
 
+import dialogue_data
+
 @api.route('/')
 def root():
     """
@@ -60,6 +62,8 @@ def dialogue(dialogue_id = None):
 
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created with root text 'blah blah blah'"
+
+            dialogue_data.new_dialogue(current_app.config['datadb'], "hello world", "assert")
 
 
         elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):

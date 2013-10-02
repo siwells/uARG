@@ -3,7 +3,7 @@
 
 import ConfigParser
 
-from flask import Flask, json, jsonify, Markup, render_template, request, session, url_for
+from flask import Flask, g, json, jsonify, Markup, render_template, request, session, url_for
 
 import configuration
 
@@ -16,6 +16,13 @@ app.register_blueprint(web)
 
 configuration.init(app)
 configuration.logs(app)
+
+import db#, data
+
+datadb = db.init_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
+
+app.config["datadb"] = datadb
+
 
 @app.errorhandler(400)
 def error_400(e):
