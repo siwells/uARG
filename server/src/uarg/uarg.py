@@ -17,7 +17,7 @@ app.register_blueprint(web)
 configuration.init(app)
 configuration.logs(app)
 
-import db#, data
+import db
 
 datadb = db.init_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
 
