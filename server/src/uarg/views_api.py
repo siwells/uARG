@@ -63,7 +63,7 @@ def dialogue(dialogue_id = None):
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created with root text 'blah blah blah'"
 
-            dialogue_data.new_dialogue(current_app.config['datadb'], "hello world", "assert")
+            dialogue_data.new_dialogue(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", "hello world", "assert")
 
 
         elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):

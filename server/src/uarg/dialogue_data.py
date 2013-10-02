@@ -4,6 +4,11 @@
 import couchdb
 import json
 
-def new_dialogue(db, root_txt, root_type):
-    doc = {"root_txt": root_txt, "root_type": root_type}
+from datetime import datetime
+
+def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type):
+
+    now = str(datetime.now().isoformat())
+    
+    doc = {"created": now, "transcript":[]}
     doc_id = db.save(doc)
