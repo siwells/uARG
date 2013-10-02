@@ -10,5 +10,5 @@ def root():
     """
     """
     
-    return Markup('<strong>Hello World</strong>')
+    return Markup('<h1>uARG</h1><p>Supporting structured online interaction</p>')
 
