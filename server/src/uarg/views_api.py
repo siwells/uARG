@@ -106,7 +106,7 @@ def dialogue_id(dialogue_id = None):
         """
         Retrieves the dialogue identified by dialogue_id
         """
-        response_msg = "GET /api/dialogue"+dialogue_id
+        response_msg = "GET /api/dialogue/"+dialogue_id
 
         payload = dialogue_data.get_dialogue(current_app.config['datadb'], "f897cdd59fb0404ae29f87c92900368a")
 
