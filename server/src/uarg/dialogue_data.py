@@ -3,15 +3,16 @@
 
 import couchdb
 import json
+import uuid as UUID
 
 from datetime import datetime
 
 def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type):
 
     now = str(datetime.now().isoformat())
+    utterance_uuid = str(UUID.uuid4())
 
-    utterance = {'timestamp':now, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'content':root_txt, 'root_type':root_type}
-    print json.dumps(utterance)
+    utterance = {'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'content':root_txt, 'root_type':root_type}
     
     doc = {"created": now, "transcript":[utterance]}
     doc_id = db.save(doc)
