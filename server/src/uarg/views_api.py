@@ -70,14 +70,16 @@ def dialogue(dialogue_id = None):
 
 
         elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):
-            resp_txt = data.get('resp_txt')
-            resp_type = data.get('resp_type')
+            msg_txt = data.get('resp_txt')
+            msg_type = data.get('resp_type')
             src_url = data.get('src_url')
             src_txt = data.get('src_txt')
             
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created in response to 'blah blah blah' at http://www.dkfd.com"
-            
+
+            dialogue_data.new_dialogue(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", msg_txt, msg_type, 
+                src_txt = src_txt, src_url = src_url) 
 
         else:
             status = 'ko'
