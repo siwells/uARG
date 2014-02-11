@@ -6,8 +6,11 @@ NB. Throughout this tutorial introduction we use the JQ command line JSON filter
 api/dialogue
 ============
 
-Create a dialogue (1):
+Create a dialogue (1a):
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"msg_txt":"bees are nice", "msg_type":"claim"}' -X POST | jq '.'
+
+Create a dialogue (1b):
+    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"msg_txt":"bees are nice"}' -X POST | jq '.'
 
 
 Create a dialogue (2):
