@@ -56,9 +56,12 @@ def dialogue(dialogue_id = None):
         src_txt = None
 
         data = request.json
-        if all(key in data for key in ('msg_txt','msg_type')):
+        if 'msg_txt' in data:
             msg_txt = data.get('msg_txt')
-            msg_type = data.get('msg_type')
+            if msg_type in data:
+                msg_type = data.get('msg_type')
+            else:
+                msg_type = "claim" 
 
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created with root text 'blah blah blah'"
