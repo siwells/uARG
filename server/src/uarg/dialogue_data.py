@@ -9,7 +9,6 @@ from datetime import datetime
 
 def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None, src_url = None):
 
-    dialogue_uuid = str(UUID.uuid4())
     utterance_uuid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
 
@@ -19,7 +18,7 @@ def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None,
         utterance['src_txt'] = src_txt
         utterance['src_url'] = src_url
     
-    doc = {"dialogue_uuid": dialogue_uuid, "created": now, "transcript":[utterance]}
+    doc = {"created": now, "transcript":[utterance]}
     doc_id = db.save(doc)
 
 def add_utterance(db):
@@ -27,11 +26,11 @@ def add_utterance(db):
 
     """
 
-def get_dialogue(db, dialogue_id):
+def get_dialogue(db, dialogue_uuid):
     """
     Get the document from db identified by event_uuid
     """
-    if dialogue_id in db:
-        return db[dialogue_id]
+    if dialogue_uuid in db:
+        return db[dialogue_uuid]
     
 

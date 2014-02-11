@@ -102,15 +102,17 @@ def dialogue_id(dialogue_id = None):
     status = 'ok'
     status_code = 200
 
+    
     if request.method == 'GET':
         """
         Retrieves the dialogue identified by dialogue_id
         """
         response_msg = "GET /api/dialogue/"+dialogue_id
-
-        payload = dialogue_data.get_dialogue(current_app.config['datadb'], "f897cdd59fb0404ae29f87c92900368a")
-
-        #payload = { 'transcript':[{'idx':'1', 'speaker':{'id':'12343212332', 'name':'Simon Wells'}, 'msg':'bees are nice', 'msg_type':'claim'}, {'idx':'2', 'speaker':{'id':'32143212223', 'name':'Thomas Wells'}, 'msg':'yes they are', 'msg_type':'agree'}]}
+        payload = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
+        
+        if payload is None:
+            status = 'ko'
+            response_msg = "Failed to GET /api/dialogue/"+dialogue_id
 
     elif request.method == 'POST':
         """
