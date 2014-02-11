@@ -20,7 +20,10 @@ api/dialogues    - GET   :: return list of dialogues
                                     activity
 
 api/dialogue    - POST  :: create new dialogue by either: 
-                                [1] supplying a new dialogue root:
+                                [1a] supplying a new dialogue root:
+                                    {   'msg':'some shit...'  }
+
+                                [1b] supplying a new dialogue root:
                                     {   'msg':'some shit...', 'msg_type':'' }
 
                                 [2] responding to an existing textual resource on the web:
