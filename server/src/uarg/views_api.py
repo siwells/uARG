@@ -223,17 +223,10 @@ def dialogues():
         date
         activity
     """
-
-    #    payload = {'dialogues':[{'dialogue_id':'123432245653', 'root_txt':'bees are nice'}, {'dialogue_id':'54323454245653', 'root_txt':'bees are really nice'}]}
-
     payload = dialogue_data.get_dialogues(current_app.config['datadb'])
-    #print json.dumps(payload)
-
     msg = "List of dialogues retrieved successfully from server"
     response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':payload}
-
     current_app.logger.info(msg)
-
     return jsonify( response )
 
 
