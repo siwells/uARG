@@ -119,10 +119,16 @@ def dialogue_id(dialogue_id = None):
         Adds a new utterance to the dialogue identified by dialogue_id
         """
         data = request.json
-        if all(key in data for key in ('msg_txt','msg_type')):
+        if all(key in data for key in ('utterance_uuid', 'response_txt','response_type')):
 
-            response_msg = "POST /api/dialogue/"+dialogue_id
-            payload = { 'dialogue_id':dialogue_id, 'utterance_id':'NEW_UTTERANCE_ID' }
+            utterance_uuid = data.get('utterance_uuid')
+            response_txt = data.get('response_txt')
+            response_type = data.get('response_type')
+
+            payload = dialogue_data.add_utterance(current_app.config['datadb'], dialogue_id, utterance_uuid, response_txt, response_type)
+            
+            #response_msg = "POST /api/dialogue/"+dialogue_id
+            #payload = { 'dialogue_id':dialogue_id, 'utterance_id':'NEW_UTTERANCE_ID' }
 
 
 
