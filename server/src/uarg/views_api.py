@@ -125,11 +125,9 @@ def dialogue_id(dialogue_id = None):
             response_txt = data.get('response_txt')
             response_type = data.get('response_type')
 
-            payload = dialogue_data.add_utterance(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", dialogue_id, utterance_uuid, response_txt, response_type)
+            dialogue_data.add_utterance(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", dialogue_id, utterance_uuid, response_txt, response_type)
             
-            #response_msg = "POST /api/dialogue/"+dialogue_id
-            #payload = { 'dialogue_id':dialogue_id, 'utterance_id':'NEW_UTTERANCE_ID' }
-
+            response_msg = "POST /api/dialogue/"+dialogue_id
 
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
