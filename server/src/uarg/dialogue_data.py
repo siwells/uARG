@@ -13,7 +13,7 @@ def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None,
     utterance_uuid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
 
-    utterance = {'index':0, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'content':root_txt, 'root_type':root_type}
+    utterance = {'index':1, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'content':root_txt, 'root_type':root_type}
 
     if (src_txt is not None and src_url is not None):
         utterance['src_txt'] = src_txt
