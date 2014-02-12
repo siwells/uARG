@@ -20,14 +20,9 @@ def add_utterance(db, dialogue, speaker, referent, content, locution):
     """
 
     """
-    #uid = str(UUID.uuid4())
-    #now = str(datetime.now().isoformat())
-
     doc = db[dialogue]
     idx = len(doc['transcript']) + 1
     utterance = new_utterance(1, speaker, content, locution, referent)
-    #utterance = {'idx':idx, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'referent': referent, 'content':content, 'locution':locution }
-
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
 
