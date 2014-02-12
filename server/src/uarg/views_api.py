@@ -48,44 +48,25 @@ def dialogue(dialogue_id = None):
 
         Returns a response containing the UUID for the new dialogue
         """
-        content = None
-        msg_type = None
-        resp_txt = None
-        resp_type = None
-        src_url = None
-        src_txt = None
-
         data = request.json
         if 'content' in data:
             content = data.get('content')
             if 'locution' in data:
                 locution = data.get('locution')
             else:
-                locution = "claim" 
+                locution = "claim"
 
-            payload = {'dialogue_id':'DUMMYDIALOGUEID'}
+            referent = None
+            if 'referent' in data:
+                referent = data.get('referent')
+
+            dialogue_data.new_dialogue(current_app.config['datadb'], "3298h3hiu3h2u", content, locution, referent)
             response_msg = "New dialogue created with root text 'blah blah blah'"
-
-            dialogue_data.new_dialogue(current_app.config['datadb'], "3298h3hiu3h2u", content, locution)
-
-
-        elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):
-            msg_txt = data.get('resp_txt')
-            msg_type = data.get('resp_type')
-            src_url = data.get('src_url')
-            src_txt = data.get('src_txt')
-            
-            payload = {'dialogue_id':'DUMMYDIALOGUEID'}
-            response_msg = "New dialogue created in response to 'blah blah blah' at http://www.dkfd.com"
-
-            dialogue_data.new_dialogue(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", msg_txt, msg_type, 
-                src_txt = src_txt, src_url = src_url) 
 
         else:
             status = 'ko'
             status_code = 400
             response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
-
         
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
     current_app.logger.info(response)
