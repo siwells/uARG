@@ -21,10 +21,17 @@ def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None,
     doc = {"created": now, "transcript":[utterance]}
     doc_id = db.save(doc)
 
-def add_utterance(db):
+def add_utterance(db, speaker, speaker_uuid, dialogue_uuid, source_uuid, response_txt, response_type):
     """
 
     """
+    utterance_uuid = str(UUID.uuid4())
+    now = str(datetime.now().isoformat())
+
+    utterance = {'index':0, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'source_uuid': source_uuid, 'content':response_txt, 'response_type':response_type }
+
+    print json.dumps(utterance)
+
 
 def get_dialogue(db, dialogue_uuid):
     """
