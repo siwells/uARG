@@ -22,18 +22,18 @@ def new_dialogue(db, speaker, content, locution, referent = None):
     doc_id = db.save(doc)
 
 
-def add_utterance(db, speaker, speaker_uuid, dialogue_uuid, source_uuid, response_txt, response_type):
+def add_utterance(db, speaker, referent, content, locution):
     """
 
     """
-    utterance_uuid = str(UUID.uuid4())
+    uid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
 
-    doc = db[dialogue_uuid]
+    doc = db[referent]
 
     idx = len(doc['transcript']) + 1
 
-    utterance = {'index':idx, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'source_uuid': source_uuid, 'content':response_txt, 'response_type':response_type }
+    utterance = {'index':idx, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'referent': referent, 'content':content, 'locution':locution }
 
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
