@@ -34,6 +34,13 @@ def get_dialogue(db, dialogue_uuid):
     if dialogue_uuid in db:
         return db[dialogue_uuid]
 
+def get_dialogues(db):
+    """
+    Get a collection of dialogue uids
+    """
+
+    return [ db[_id].get('_id') for _id in db ]
+
 
 def new_utterance(idx, speaker, content, locution, referent = None):
     """
