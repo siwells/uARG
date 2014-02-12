@@ -63,3 +63,20 @@ api/dialogues/count
 
 & a count of the number of dialogue:
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogues/count -X GET | jq '.'
+
+
+Transcript Structure
+====================
+
+The dialogue transcript is an array of the following utterance structures:
+
+{
+    "content"
+    "locution"              - { root | locution_name }
+    "idx"
+    "uid"
+    "timestamp"
+    "speaker"
+    "referent"     - { null | The utterance that this one responds to }
+}
+
