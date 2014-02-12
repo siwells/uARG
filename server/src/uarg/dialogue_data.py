@@ -33,7 +33,7 @@ def add_utterance(db, speaker, referent, content, locution):
 
     idx = len(doc['transcript']) + 1
 
-    utterance = {'index':idx, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'referent': referent, 'content':content, 'locution':locution }
+    utterance = {'idx':idx, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'referent': referent, 'content':content, 'locution':locution }
 
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
