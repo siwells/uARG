@@ -24,7 +24,7 @@ And retrieve it:
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/{dialogue_uuid} -X GET | jq '.'
 
 Or add a new utterance to the transcript for the specified dialogue:
-    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/{dialogue_uuid} -d '{"msg_txt":"wasps are not nice", "msg_type":"assertion"}' -X POST | jq '.'
+    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/{dialogue_uuid} -d '{"utterance_uuid":"jsdj23-32de-d3" , "response_txt":"wasps are not nice", "response_type":"assertion"}' -X POST | jq '.'
 
 
 api/dialogues
