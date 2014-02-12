@@ -117,9 +117,6 @@ def dialogue_id(dialogue_id = None):
     return jsonify( response )
 
 
-
-
-
 @api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>', methods=['GET'])
 def utterance(dialogue_id = None, utterance_id = None):
     """
