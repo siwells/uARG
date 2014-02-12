@@ -7,6 +7,7 @@ import uuid as UUID
 
 from datetime import datetime
 
+
 def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None, src_url = None):
 
     utterance_uuid = str(UUID.uuid4())
@@ -21,6 +22,7 @@ def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None,
     doc = {"created": now, "transcript":[utterance]}
     doc_id = db.save(doc)
 
+
 def add_utterance(db, speaker, speaker_uuid, dialogue_uuid, source_uuid, response_txt, response_type):
     """
 
@@ -28,9 +30,14 @@ def add_utterance(db, speaker, speaker_uuid, dialogue_uuid, source_uuid, respons
     utterance_uuid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
 
-    utterance = {'index':0, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'source_uuid': source_uuid, 'content':response_txt, 'response_type':response_type }
+    doc = db[dialogue_uuid]
 
-    print json.dumps(utterance)
+    idx = len(doc['transcript']) + 1
+
+    utterance = {'index':idx, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'source_uuid': source_uuid, 'content':response_txt, 'response_type':response_type }
+
+    doc['transcript'].append(utterance)
+    doc_id = db.save(doc)
 
 
 def get_dialogue(db, dialogue_uuid):
