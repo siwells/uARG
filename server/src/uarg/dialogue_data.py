@@ -8,16 +8,15 @@ import uuid as UUID
 from datetime import datetime
 
 
-def new_dialogue(db, speaker, speaker_uuid, root_txt, root_type, src_txt = None, src_url = None):
+def new_dialogue(db, speaker, content, locution, src_url = None):
 
-    utterance_uuid = str(UUID.uuid4())
+    uid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
 
-    utterance = {'index':1, 'timestamp':now, 'utterance_uuid': utterance_uuid, 'speaker':speaker, 'speaker_uuid':speaker_uuid, 'content':root_txt, 'root_type':root_type}
+    utterance = {'idx':1, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'content':content, 'locution':locution}
 
-    if (src_txt is not None and src_url is not None):
-        utterance['src_txt'] = src_txt
-        utterance['src_url'] = src_url
+    #if ( url is not None):
+    #    utterance['url'] = url
     
     doc = {"created": now, "transcript":[utterance]}
     doc_id = db.save(doc)

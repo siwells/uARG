@@ -48,7 +48,7 @@ def dialogue(dialogue_id = None):
 
         Returns a response containing the UUID for the new dialogue
         """
-        msg_txt = None
+        content = None
         msg_type = None
         resp_txt = None
         resp_type = None
@@ -56,17 +56,17 @@ def dialogue(dialogue_id = None):
         src_txt = None
 
         data = request.json
-        if 'msg_txt' in data:
-            msg_txt = data.get('msg_txt')
-            if msg_type in data:
-                msg_type = data.get('msg_type')
+        if 'content' in data:
+            content = data.get('content')
+            if 'locution' in data:
+                locution = data.get('locution')
             else:
-                msg_type = "claim" 
+                locution = "claim" 
 
             payload = {'dialogue_id':'DUMMYDIALOGUEID'}
             response_msg = "New dialogue created with root text 'blah blah blah'"
 
-            dialogue_data.new_dialogue(current_app.config['datadb'], "Simon Wells", "3298h3hiu3h2u", msg_txt, msg_type)
+            dialogue_data.new_dialogue(current_app.config['datadb'], "3298h3hiu3h2u", content, locution)
 
 
         elif all(key in data for key in ('resp_txt', 'resp_type', 'src_url', 'src_txt')):
