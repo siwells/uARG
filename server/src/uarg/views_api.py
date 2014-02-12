@@ -106,7 +106,7 @@ def dialogue_id(dialogue_id = None):
             content = data.get('content')
             locution = data.get('locution')
 
-            dialogue_data.add_utterance(current_app.config['datadb'], "3298h3hiu3h2u", referent, content, locution)
+            dialogue_data.add_utterance(current_app.config['datadb'], dialogue_id, "3298h3hiu3h2u", referent, content, locution)
             
             response_msg = "POST /api/dialogue/"+dialogue_id
 
