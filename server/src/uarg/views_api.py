@@ -1,7 +1,7 @@
 # coding: utf-8
 # as per http://www.python.org/dev/peps/pep-0263/
 
-from flask import Blueprint, current_app, json, jsonify, request
+from flask import Blueprint, current_app, json, jsonify, request, url_for
 api = Blueprint("api", __name__, url_prefix='/api')
 
 import dialogue_data
@@ -223,7 +223,10 @@ def dialogues():
         date
         activity
     """
-    payload = dialogue_data.get_dialogues(current_app.config['datadb'])
+    dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
+    url = url_for('.dialogues', _external=True)
+    payload = [ {"uid": d, "link": url + d }  for d in dialogues  ]
+        
     msg = "List of dialogues retrieved successfully from server"
     response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':payload}
     current_app.logger.info(msg)
