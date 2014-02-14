@@ -224,7 +224,7 @@ def dialogues():
         activity
     """
     dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
-    url = url_for('.dialogues', _external=True)
+    url = url_for('.dialogues', _external=True) + "/"
     payload = [ {"uid": d, "link": url + d }  for d in dialogues  ]
         
     msg = "List of dialogues retrieved successfully from server"
