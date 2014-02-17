@@ -32,7 +32,8 @@ def get_dialogue(db, dialogue_uuid):
     Get the document from db identified by event_uuid
     """
     if dialogue_uuid in db:
-        return db[dialogue_uuid]
+        doc = db[dialogue_uuid]
+        return {"created": doc['created'], "transcript": doc['transcript']}
 
 def get_dialogues(db):
     """
