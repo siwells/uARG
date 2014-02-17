@@ -33,7 +33,7 @@ def get_dialogue(db, dialogue_uuid):
     """
     if dialogue_uuid in db:
         doc = db[dialogue_uuid]
-        return {"created": doc['created'], "transcript": doc['transcript']}
+        return {"uid": dialogue_uuid, "created": doc['created'], "transcript": doc['transcript']}
 
 def get_dialogues(db):
     """
