@@ -187,10 +187,10 @@ def dialogues():
     """
     dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
     url = url_for('.dialogue', _external=True) + "/"
-    payload = [ {"uid": d, "link": url + d }  for d in dialogues  ]
+    data = [ {"uid": d, "link": url + d }  for d in dialogues  ]
     
     msg = "List of dialogues retrieved successfully from server"
-    response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':payload}
+    response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':data}
     current_app.logger.info(msg)
     return jsonify( response )
 
