@@ -187,8 +187,10 @@ def dialogues():
     """
     dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
     url = url_for('.dialogue', _external=True) + "/"
-    data = [ {"uid": d} for d in dialogues  ]
     _links = [ {"href": url + d } for d in dialogues ]
+    
+    data = [ {"uid": d} for d in dialogues  ]
+    
     msg = "List of dialogues retrieved successfully from server"
     response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':data, '_links': _links}
     current_app.logger.info(msg)
