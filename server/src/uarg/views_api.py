@@ -190,9 +190,9 @@ def dialogues():
     
     href = [ {"href": url + d } for d in dialogues ]
     
-    _links = { "self": { "href": url_for('.dialogues', _external=True) }, "items": href  }
+    _links = { "self": { "href": url_for('.dialogues', _external=True) }}
 
-    data = [ {"uid": d} for d in dialogues  ]
+    data = [ {"uid": d, "_links":{ "self": {"href": url + d }}} for d in dialogues  ]
     
     msg = "List of dialogues retrieved successfully from server"
     response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':data, '_links': _links}
