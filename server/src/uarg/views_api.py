@@ -190,7 +190,7 @@ def dialogues():
     
     href = [ {"href": url + d } for d in dialogues ]
     
-    _links =  { "self": { "href": url_for('.dialogues', _external=True), "items": href} }
+    _links = { "self": { "href": url_for('.dialogues', _external=True) }, "items": href  }
 
     data = [ {"uid": d} for d in dialogues  ]
     
