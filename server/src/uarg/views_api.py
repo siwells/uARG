@@ -182,7 +182,7 @@ def dialogues():
         order
         tags
         ratings
-        date
+        date {since & until params to enable time periods}
         activity
     """
     dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
