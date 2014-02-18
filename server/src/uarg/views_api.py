@@ -124,7 +124,7 @@ def dialogue_id(dialogue_id = None):
     return jsonify( response )
 
 
-@api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>', methods=['GET'])
+@api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>', methods=['GET'])
 def utterance_id(dialogue_id = None, utterance_id = None):
     """
     """
@@ -143,7 +143,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         Retrieves a specfied utterance from a specifed dialogue identified by utterance_id & dialogue_id
         """
-        response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
 
         payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, utterance_id)
 
