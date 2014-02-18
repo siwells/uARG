@@ -50,10 +50,8 @@ def new_utterance(idx, speaker, content, locution, referent = None):
     uid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
     
-    utterance = {'idx':1, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'content':content, 'locution':locution}
-
-    if ( referent is not None):
-        utterance['referent'] = referent
+    utterance = {'idx':1, 'timestamp':now, 'uid': uid, 'speaker':speaker, 'content':content, 
+        'locution':locution, 'referent':referent}
 
     return utterance
     
