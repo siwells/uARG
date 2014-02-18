@@ -186,15 +186,13 @@ def dialogues():
         activity
     """
     dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
-    url = url_for('.dialogue', _external=True) + "/"
-    
-    href = [ {"href": url + d } for d in dialogues ]
-    
-    _links = { "self": { "href": url_for('.dialogues', _external=True) }}
+    dialogue_url = url_for('.dialogue', _external=True) + "/"
 
-    data = [ {"uid": d, "_links":{ "self": {"href": url + d }}} for d in dialogues  ]
-    
+    data = [ {"uid": d, "_links":{ "self": {"href": dialogue_url + d }}} for d in dialogues  ]
+
+    _links = { "self": { "href": url_for('.dialogues', _external=True) }}
     msg = "List of dialogues retrieved successfully from server"
+
     response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':data, '_links': _links}
     current_app.logger.info(msg)
     return jsonify( response )
