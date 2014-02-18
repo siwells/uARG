@@ -82,7 +82,7 @@ def dialogue_id(dialogue_id = None):
     payload = {}
     status = 'ok'
     status_code = 200
-
+    _links = { "self": { "href": url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) }}
     
     if request.method == 'GET':
         """
@@ -111,7 +111,7 @@ def dialogue_id(dialogue_id = None):
             response_msg = "POST /api/dialogue/"+dialogue_id
 
 
-    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
     current_app.logger.info(response)
 
     return jsonify( response )
