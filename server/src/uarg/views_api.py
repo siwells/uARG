@@ -92,7 +92,7 @@ def dialogue_id(dialogue_id = None):
         dialogue = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
        
         for u in dialogue['transcript']:
-            url = url_for('.utterance', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
+            url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
             u.update({ "_links": { "self": { "href":url }}})
 
 
@@ -125,14 +125,14 @@ def dialogue_id(dialogue_id = None):
 
 
 @api.route('/dialogue/<dialogue_id>/transcript/<utterance_id>', methods=['GET'])
-def utterance(dialogue_id = None, utterance_id = None):
+def utterance_id(dialogue_id = None, utterance_id = None):
     """
     """
     response_msg = None
     payload = {}
     status = 'ok'
     status_code = 200
-    _links = { "self": { "href": url_for('.utterance', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) }}
+    _links = { "self": { "href": url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) }}
 
     utterance_txt = None
     speaker = None
