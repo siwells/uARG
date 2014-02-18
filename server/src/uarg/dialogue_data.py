@@ -22,7 +22,7 @@ def add_utterance(db, dialogue, speaker, referent, content, locution):
     """
     doc = db[dialogue]
     idx = len(doc['transcript']) + 1
-    utterance = new_utterance(1, speaker, content, locution, referent)
+    utterance = new_utterance(idx, speaker, content, locution, referent)
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
 
