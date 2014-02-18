@@ -42,6 +42,14 @@ def get_dialogues(db):
 
     return [ db[_id].get('_id') for _id in db ]
 
+def get_utterance(db, dialogue_uuid, utterance_uuid):
+    """
+    Return the utterance identified by utterance_uuid & dialogue_uuid
+    """
+    doc = get_dialogue(db, dialogue_uuid)
+    if doc is not None:
+        transcript = doc['transcript']
+        return [ u for u in transcript if u['uid']==utterance_uuid ]
 
 def new_utterance(idx, speaker, content, locution, referent = None):
     """
