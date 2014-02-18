@@ -80,3 +80,31 @@ The dialogue transcript is an array of the following utterance structures:
     "referent"     - { null | The utterance that this one responds to }
 }
 
+
+
+EXAMPLES
+========
+
+Create a new dialogue and add two responses to it:
+
+simon@ragnarok ~ $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue -d '{"content":"bees are nice"}' -X POST | jq '.'
+{
+  "status_code": 200,
+  "status": "ok",
+  "message": "New dialogue created with root text 'blah blah blah'",
+  "data": {}
+}
+simon@ragnarok ~ $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/e3c1982a6f4f69a9a6a086e0a4000cda -d '{"referent":"f1b43eb0-f45e-4538-bc92-06550865e2e8" , "content":"wasps are not nice", "locution":"assertion"}' -X POST | jq '.'
+{
+  "status_code": 200,
+  "status": "ok",
+  "message": "POST /api/dialogue/e3c1982a6f4f69a9a6a086e0a4000cda",
+  "data": {}
+}
+simon@ragnarok ~ $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/e3c1982a6f4f69a9a6a086e0a4000cda -d '{"referent":"f1b43eb0-f45e-4538-bc92-06550865e2e8" , "content":"hornets are the worst", "locution":"assertion"}' -X POST | jq '.'
+{
+  "status_code": 200,
+  "status": "ok",
+  "message": "POST /api/dialogue/e3c1982a6f4f69a9a6a086e0a4000cda",
+  "data": {}
+
