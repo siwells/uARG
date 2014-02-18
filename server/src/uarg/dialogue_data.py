@@ -45,7 +45,7 @@ def get_dialogues(db):
 
 def new_utterance(idx, speaker, content, locution, referent = None):
     """
-
+    Create a new utterance dictionary from the supplied arguments and return it to the caller
     """
     uid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
