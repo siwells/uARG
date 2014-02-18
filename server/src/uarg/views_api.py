@@ -136,7 +136,8 @@ def utterance(dialogue_id = None, utterance_id = None):
         Retrieves a specfied utterance from a specifed dialogue identified by utterance_id & dialogue_id
         """
         response_msg = "GET /api/dialogue/"+dialogue_id+"/transcript/"+utterance_id
-        payload = { 'dialogue_id':dialogue_id, 'utterance_id':utterance_id, 'utterance_txt':utterance_txt, 'speaker':speaker, 'timestampt':timestamp, 'response_to':response_to }
+
+        payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, utterance_id)
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
     current_app.logger.info( response )
