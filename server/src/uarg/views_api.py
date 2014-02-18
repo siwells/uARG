@@ -90,10 +90,11 @@ def dialogue_id(dialogue_id = None):
         """
         response_msg = "GET /api/dialogue/"+dialogue_id
         dialogue = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
-       
-        for u in dialogue['transcript']:
-            url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
-            u.update({ "_links": { "self": { "href":url }}})
+        
+        if dialogue is not None:
+            for u in dialogue['transcript']:
+                url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
+                u.update({ "_links": { "self": { "href":url }}})
 
 
         payload = dialogue
