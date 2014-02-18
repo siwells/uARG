@@ -89,8 +89,15 @@ def dialogue_id(dialogue_id = None):
         Retrieves the dialogue identified by dialogue_id
         """
         response_msg = "GET /api/dialogue/"+dialogue_id
-        payload = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
-        
+        dialogue = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
+       
+        for u in dialogue['transcript']:
+            url = url_for('.utterance', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
+            u.update({ "_links": { "self": { "href":url }}})
+
+
+        payload = dialogue
+
         if payload is None:
             status = 'ko'
             response_msg = "Failed to GET /api/dialogue/"+dialogue_id
