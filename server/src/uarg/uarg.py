@@ -21,6 +21,8 @@ import db
 
 datadb = db.init_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
 
+db.add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, null); }); } ''')
+
 app.config["datadb"] = datadb
 
 
