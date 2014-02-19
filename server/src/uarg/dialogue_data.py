@@ -12,7 +12,8 @@ def new_dialogue(db, speaker, content, locution, referent = None):
 
     now = str(datetime.now().isoformat())
     utterance = new_utterance(1, speaker, content, locution, referent)
-    doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
+    idx = get_dialogues_count(db) + 1
+    doc = {"idx": idx, "created": now, "type": "dialogue" , "transcript":[utterance]}
     doc_id = db.save(doc)
 
 
@@ -56,7 +57,7 @@ def get_dialogues_count(db):
     """
     Quick & dirty but terribly inefficient way to get the number of dialogues on the server ;)
     """
-    print "NUM DIALOGUES: ", len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
+    return len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
 
 
 def get_utterance(db, dialogue_uuid = None, utterance_uuid = None, utterance_idx = None):
