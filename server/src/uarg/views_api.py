@@ -169,8 +169,9 @@ def utterance_idx(dialogue_id = None, utterance_idx = None):
         """
         if utterance_idx is not None and dialogue_id is not None:
             try:
-                idx = int(utterance_idx)
-                payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, None, int(idx))
+
+                u_idx = int(utterance_idx)
+                payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, None, u_idx)
             except ValueError:
                 current_app.logger.info( "User didn't supply a number for the transcript index" )
                 response_msg = "The value that you supplied for the dialogue transcript index was invalid. Please enter a number greater than zero and smaller than the size of the dialogue"
