@@ -40,7 +40,7 @@ def get_dialogues(db):
     Get a collection of dialogue uids
     """
 
-    return [ db[_id].get('_id') for _id in db ]
+    return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
 
 def get_utterance(db, dialogue_uuid, utterance_uuid):
     """
