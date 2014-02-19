@@ -146,7 +146,29 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
 
-        payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, utterance_id)
+        payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, utterance_id, None)
+
+    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
+    current_app.logger.info( response )
+
+    return jsonify( response )
+
+@api.route('/dialogue/<dialogue_id>/transcript/<utterance_idx>', methods=['GET'])
+def utterance_idx(dialogue_id = None, utterance_idx = None):
+    """
+    """
+    response_msg = None
+    payload = {}
+    status = 'ok'
+    status_code = 200
+    _links = { "self": { "href": url_for('.utterance_idx', dialogue_id=dialogue_id, utterance_idx=utterance_idx, _external=True) }}
+
+    if request.method == 'GET':
+        """
+
+        """
+        response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_idx
+        payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, None, int(utterance_idx))
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
     current_app.logger.info( response )
