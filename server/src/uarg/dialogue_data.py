@@ -35,12 +35,22 @@ def get_dialogue(db, dialogue_uuid):
         doc = db[dialogue_uuid]
         return {"uid": dialogue_uuid, "created": doc['created'], "transcript": doc['transcript']}
 
+
+def get_dialogue_size(db, dialogue_uuid):
+    """
+    Return the size of the dialogue (Defined as the number of utterances in the transcript)
+    """
+    if dialogue_uuid in db:
+        doc = db[dialogue_uuid]
+        return len(doc.get('transcript'))
+
+
 def get_dialogues(db):
     """
     Get a collection of dialogue uids
     """
-
     return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
+
 
 def get_utterance(db, dialogue_uuid = None, utterance_uuid = None, utterance_idx = None):
     """
@@ -52,7 +62,9 @@ def get_utterance(db, dialogue_uuid = None, utterance_uuid = None, utterance_idx
         if utterance_uuid is not None:
             return [ u for u in transcript if u['uid']==utterance_uuid ]
         if utterance_idx is not None:
-            return transcript[utterance_idx-1]
+            d_size = get_dialogue_size(db, dialogue_uuid)
+            if  utterance_idx <= d_size and utterance_idx > 0:
+                return transcript[utterance_idx-1]
     
 
 def new_utterance(idx, speaker, content, locution, referent = None):
