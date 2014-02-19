@@ -54,7 +54,11 @@ def get_dialogues(db):
 
 def get_utterance(db, dialogue_uuid = None, utterance_uuid = None, utterance_idx = None):
     """
-    Return the utterance identified by utterance_uuid & dialogue_uuid
+    Return the utterance identified by either:
+        utterance_uuid & dialogue_uuid
+        utterance_idx & dialogue_uuid
+
+        TODO: Add just utterande_uuid
     """
     doc = get_dialogue(db, dialogue_uuid)
     if doc is not None:
