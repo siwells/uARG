@@ -52,6 +52,13 @@ def get_dialogues(db):
     return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
 
 
+def get_dialogues_count(db):
+    """
+    Quick & dirty but terribly inefficient way to get the number of dialogues on the server ;)
+    """
+    print "NUM DIALOGUES: ", len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
+
+
 def get_utterance(db, dialogue_uuid = None, utterance_uuid = None, utterance_idx = None):
     """
     Return the utterance identified by either:
