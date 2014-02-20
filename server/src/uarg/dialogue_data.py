@@ -12,8 +12,7 @@ def new_dialogue(db, speaker, content, locution, referent = None):
 
     now = str(datetime.now().isoformat())
     utterance = new_utterance(1, speaker, content, locution, referent)
-    idx = get_dialogues_count(db) + 1
-    doc = {"idx": idx, "created": now, "type": "dialogue" , "transcript":[utterance]}
+    doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
     doc_id = db.save(doc)
 
 
