@@ -3,9 +3,11 @@
 
 import couchdb
 import json
+import requests
 import uuid as UUID
 
 from datetime import datetime
+from flask import current_app
 
 
 def new_dialogue(db, speaker, content, locution, referent = None):
@@ -55,6 +57,11 @@ def get_dialogues_count(db):
     """
     Quick & dirty but terribly inefficient way to get the number of dialogues on the server ;)
     """
+    #view_url = "_design/d/_view/count"
+    #args = current_app.config["datadb_ipaddress"] +":"+ current_app.config["datadb_port"] +"/"+ current_app.config["datadb_name"] +"/"+ view_url
+    #r = json.loads( requests.get( args ).text )
+    #return r['rows'][0]['value']
+
     return len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
 
 
