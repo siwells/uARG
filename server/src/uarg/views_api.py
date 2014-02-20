@@ -153,7 +153,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
 
     return jsonify( response )
 
-@api.route('/dialogue/<dialogue_id>/transcript/<utterance_idx>', methods=['GET'])
+@api.route('/dialogue/<dialogue_id>/transcript/<int:utterance_idx>', methods=['GET'])
 def utterance_idx(dialogue_id = None, utterance_idx = None):
     """
     """
@@ -168,13 +168,7 @@ def utterance_idx(dialogue_id = None, utterance_idx = None):
 
         """
         if utterance_idx is not None and dialogue_id is not None:
-            try:
-
-                u_idx = int(utterance_idx)
-                payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, None, u_idx)
-            except ValueError:
-                current_app.logger.info( "User didn't supply a number for the transcript index" )
-                response_msg = "The value that you supplied for the dialogue transcript index was invalid. Please enter a number greater than zero and smaller than the size of the dialogue"
+            payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, None, utterance_idx) #u_idx)
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
     current_app.logger.info( response )
