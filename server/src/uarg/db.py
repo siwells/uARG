@@ -26,6 +26,9 @@ def init_db(name, url):
     return db
 
 
+def get_db():
+    return db
+
 def add_view(db, design, view, fun):
     """
     Adds view functions to the specified db by specifiying the design document, the view name & the search function
