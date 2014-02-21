@@ -166,7 +166,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
-    dialogues = dialogue_data.get_dialogues(current_app.config['datadb'])
+    dialogues = dialogue_data.get_dialogues()#current_app.config['datadb'])
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
     data = [ {"uid": d, "_links":{ "self": {"href": dialogue_url + d }}} for d in dialogues  ]

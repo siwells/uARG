@@ -9,6 +9,8 @@ import uuid as UUID
 from datetime import datetime
 from flask import current_app
 
+import db as DB
+
 
 def new_dialogue(db, speaker, content, locution, referent = None):
 
@@ -46,10 +48,12 @@ def get_dialogue_size(db, dialogue_uuid):
         return len(doc.get('transcript'))
 
 
-def get_dialogues(db):
+def get_dialogues():
     """
     Get a collection of dialogue uids
     """
+    db = DB.get_db()
+
     return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
 
 
