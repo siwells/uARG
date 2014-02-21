@@ -60,7 +60,7 @@ def dialogue(dialogue_id = None):
             if 'referent' in data:
                 referent = data.get('referent')
 
-            dialogue_data.new_dialogue(current_app.config['datadb'], "3298h3hiu3h2u", content, locution, referent)
+            dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
             response_msg = "New dialogue created with root text 'blah blah blah'"
 
         else:
@@ -89,7 +89,7 @@ def dialogue_id(dialogue_id = None):
         Retrieves the dialogue identified by dialogue_id
         """
         response_msg = "GET /api/dialogue/"+dialogue_id
-        dialogue = dialogue_data.get_dialogue(current_app.config['datadb'], dialogue_id)
+        dialogue = dialogue_data.get_dialogue(dialogue_id)
         
         if dialogue is not None:
             for u in dialogue['transcript']:
@@ -114,7 +114,7 @@ def dialogue_id(dialogue_id = None):
             content = data.get('content')
             locution = data.get('locution')
 
-            dialogue_data.add_utterance(current_app.config['datadb'], dialogue_id, "3298h3hiu3h2u", referent, content, locution)
+            dialogue_data.add_utterance(dialogue_id, "3298h3hiu3h2u", referent, content, locution)
             
             response_msg = "POST /api/dialogue/"+dialogue_id
 
@@ -146,7 +146,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         if utterance_id is not None and dialogue_id is not None:
             response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
-            payload = dialogue_data.get_utterance(current_app.config['datadb'], dialogue_id, utterance_id)
+            payload = dialogue_data.get_utterance(dialogue_id, utterance_id)
 
     response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
     current_app.logger.info( response )
@@ -166,7 +166,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
-    dialogues = dialogue_data.get_dialogues()#current_app.config['datadb'])
+    dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
     data = [ {"uid": d, "_links":{ "self": {"href": dialogue_url + d }}} for d in dialogues  ]

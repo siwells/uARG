@@ -12,37 +12,43 @@ from flask import current_app
 import db as DB
 
 
-def new_dialogue(db, speaker, content, locution, referent = None):
+def new_dialogue(speaker, content, locution, referent = None):
+    """
 
+    """
+    db = DB.get_db()
     now = str(datetime.now().isoformat())
     utterance = new_utterance(1, speaker, content, locution, referent)
     doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
     doc_id = db.save(doc)
 
 
-def add_utterance(db, dialogue, speaker, referent, content, locution):
+def add_utterance(dialogue, speaker, referent, content, locution):
     """
 
     """
+    db = DB.get_db()
     doc = db[dialogue]
     utterance = new_utterance(speaker, content, locution, referent)
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
 
 
-def get_dialogue(db, dialogue_uuid):
+def get_dialogue(dialogue_uuid):
     """
     Get the document from db identified by event_uuid
     """
+    db = DB.get_db()
     if dialogue_uuid in db:
         doc = db[dialogue_uuid]
         return {"uid": dialogue_uuid, "created": doc['created'], "transcript": doc['transcript']}
 
 
-def get_dialogue_size(db, dialogue_uuid):
+def get_dialogue_size(dialogue_uuid):
     """
     Return the size of the dialogue (Defined as the number of utterances in the transcript)
     """
+    db = DB.get_db()
     if dialogue_uuid in db:
         doc = db[dialogue_uuid]
         return len(doc.get('transcript'))
@@ -57,7 +63,7 @@ def get_dialogues():
     return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
 
 
-def get_dialogues_count(db):
+def get_dialogues_count():
     """
     Quick & dirty but terribly inefficient way to get the number of dialogues on the server ;)
     """
@@ -65,18 +71,18 @@ def get_dialogues_count(db):
     #args = current_app.config["datadb_ipaddress"] +":"+ current_app.config["datadb_port"] +"/"+ current_app.config["datadb_name"] +"/"+ view_url
     #r = json.loads( requests.get( args ).text )
     #return r['rows'][0]['value']
-
+    db = DB.get_db()
     return len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
 
 
-def get_utterance(db, dialogue_uuid = None, utterance_uuid = None):
+def get_utterance(dialogue_uuid = None, utterance_uuid = None):
     """
     Return the utterance identified by either:
         utterance_uuid & dialogue_uuid
 
         TODO: Add just utterance_uuid
     """
-    doc = get_dialogue(db, dialogue_uuid)
+    doc = get_dialogue(dialogue_uuid)
     if doc is not None:
         transcript = doc['transcript']
         if utterance_uuid is not None:
