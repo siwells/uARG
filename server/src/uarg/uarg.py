@@ -31,9 +31,6 @@ doc_id = datadb.save(doc)
 
 datastores.add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
 
-app.config["datadb"] = datadb
-
-
 @app.errorhandler(400)
 def error_400(e):
     return abort('ko', 400, 'Bad Request: Browser (or proxy) sent something that could not be understood')
