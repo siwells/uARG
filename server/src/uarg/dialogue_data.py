@@ -16,7 +16,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     """
 
     """
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
     now = str(datetime.now().isoformat())
     utterance = new_utterance(1, speaker, content, locution, referent)
     doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
@@ -27,7 +27,7 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     """
 
     """
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
     doc = db[dialogue]
     utterance = new_utterance(speaker, content, locution, referent)
     doc['transcript'].append(utterance)
@@ -38,7 +38,7 @@ def get_dialogue(dialogue_uuid):
     """
     Get the document from db identified by event_uuid
     """
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
     if dialogue_uuid in db:
         doc = db[dialogue_uuid]
         return {"uid": dialogue_uuid, "created": doc['created'], "transcript": doc['transcript']}
@@ -48,7 +48,7 @@ def get_dialogue_size(dialogue_uuid):
     """
     Return the size of the dialogue (Defined as the number of utterances in the transcript)
     """
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
     if dialogue_uuid in db:
         doc = db[dialogue_uuid]
         return len(doc.get('transcript'))
@@ -58,7 +58,7 @@ def get_dialogues():
     """
     Get a collection of dialogue uids
     """
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
 
     return [ db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue" ]
 
@@ -71,7 +71,7 @@ def get_dialogues_count():
     #args = current_app.config["datadb_ipaddress"] +":"+ current_app.config["datadb_port"] +"/"+ current_app.config["datadb_name"] +"/"+ view_url
     #r = json.loads( requests.get( args ).text )
     #return r['rows'][0]['value']
-    db = DB.get_db()
+    db = DB.get_dialogue_db()
     return len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
 
 
