@@ -26,7 +26,6 @@ datastores.add_view(datadb, "dialogues", "list_dialogues", ''' function(doc) { i
 
 doc = datadb['_design/dialogues']
 doc['language'] = 'javascript'
-print json.dumps(doc)
 doc_id = datadb.save(doc)
 
 datastores.add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
