@@ -10,6 +10,7 @@ from datetime import datetime
 from flask import current_app
 
 import datastores
+import utterance_data
 
 
 def new_dialogue(speaker, content, locution, referent = None):
@@ -18,7 +19,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     """
     db = datastores.get_dialogue_db()
     now = str(datetime.now().isoformat())
-    utterance = new_utterance(1, speaker, content, locution, referent)
+    utterance = utterance_data.new_utterance(speaker, content, locution, referent)
     doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
     doc_id = db.save(doc)
 
@@ -29,7 +30,7 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     """
     db = datastores.get_dialogue_db()
     doc = db[dialogue]
-    utterance = new_utterance(speaker, content, locution, referent)
+    utterance = utterance_data.new_utterance(speaker, content, locution, referent)
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
 
@@ -87,19 +88,4 @@ def get_utterance(dialogue_uuid = None, utterance_uuid = None):
         transcript = doc['transcript']
         if utterance_uuid is not None:
             return [ u for u in transcript if u['uid']==utterance_uuid ]
-
-
-def new_utterance(speaker, content, locution, referent = None):
-    """
-    Create a new utterance dictionary from the supplied arguments and return it to the caller
-    """
-    uid = str(UUID.uuid4())
-    now = str(datetime.now().isoformat())
-    
-    utterance = {'timestamp':now, 'uid': uid, 'speaker':speaker, 'content':content, 
-        'locution':locution, 'referent':referent}
-
-    return utterance
-    
-    
 
