@@ -108,9 +108,11 @@ def dialogue_id(dialogue_id = None):
         Adds a new utterance to the dialogue identified by dialogue_id
         """
         data = request.json
-        if all(key in data for key in ('referent', 'content','locution')):
+        referent = None
+        if all(key in data for key in ('content','locution')):
 
-            referent = data.get('referent')
+            if 'referent' in data:
+                referent = data.get('referent')
             content = data.get('content')
             locution = data.get('locution')
 
