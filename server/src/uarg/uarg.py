@@ -24,10 +24,6 @@ userdb = datastores.init_db(app.config["userdb_name"], app.config["userdb_ipaddr
 
 datastores.add_view(datadb, "dialogues", "list_dialogues", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
 
-doc = datadb['_design/dialogues']
-doc['language'] = 'javascript'
-doc_id = datadb.save(doc)
-
 datastores.add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
 
 @app.errorhandler(400)
