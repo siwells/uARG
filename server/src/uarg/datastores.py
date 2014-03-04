@@ -39,6 +39,9 @@ def add_db(name, url):
     return db[name]
 
 def get_dialogue_db():
+    """
+    Return the dialogue DB
+    """
     return db[ current_app.config['datadb_name'] ]
 
 def get_user_db():
