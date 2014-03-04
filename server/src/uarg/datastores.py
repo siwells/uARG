@@ -21,8 +21,8 @@ def init_db(name, url):
     except PreconditionFailed:
         db[name] = server[name]
     except:
-        current_app.logger.critical( "Failed to connect to the uARG database. Is the CouchDB server running?" )
-        print "Failed to connect to the uARG users database. Is the CouchDB server running?"
+        current_app.logger.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
+        print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
         exit(1)
     return db[name]
 
