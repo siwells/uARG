@@ -45,6 +45,9 @@ def get_dialogue_db():
     return db[ current_app.config['datadb_name'] ]
 
 def get_user_db():
+    """
+    Return the user DB
+    """
     return db[ current_app.config['userdb_name'] ]
 
 
