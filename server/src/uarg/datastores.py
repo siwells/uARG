@@ -38,7 +38,7 @@ def add_view(db, design, view, fun):
     Adds view functions to the specified db by specifiying the design document, the view name & the search function
     """
     
-    design_doc = { 'views': { view: { 'map': fun}}}
+    design_doc = { 'language':'javascript', 'views': { view: { 'map': fun}}}
     
     try: 
         db["_design/"+design] = design_doc
