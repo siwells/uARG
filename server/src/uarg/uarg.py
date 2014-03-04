@@ -20,7 +20,7 @@ configuration.logs(app)
 import datastores
 
 datadb = datastores.init_data_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
-
+userdb = datastores.init_data_db(app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
 
 datastores.add_view(datadb, "dialogues", "list_dialogues", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
 
