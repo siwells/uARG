@@ -10,7 +10,7 @@ db = dict()
 
 def init(app):
     """
-
+    Initialise the databases & CouchDB views
     """
 
     datadb = add_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
