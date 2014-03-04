@@ -26,6 +26,24 @@ def init_data_db(name, url):
         exit(1)
     return datadb[name]
 
+def init_user_db(name, url):
+    """
+
+    """
+    userdb = dict()
+    global userdb
+    server = couhdb.client.Server(url)
+
+    try:
+        userdb[name] = server.create(name)
+    except PreconditionFailed:
+        userdb[name] = server[name]
+    except:
+        curent_app.logger.critical("Failed to initialise the "+name+" DB. Is the CouchDB server running?")
+        print "Failed to initialise the "+name+" DB. Is the CouchDB server running?"
+        exit(1)
+    return userdb[name]
+
 
 def get_dialogue_db():
     return datadb[ current_app.config['datadb_name'] ]
