@@ -8,6 +8,14 @@ from flask import current_app
 
 db = dict()
 
+def init(app):
+    """
+
+    """
+
+    init_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
+    init_db(app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
+
 def init_db(name, url):
     """
     Check whether the database 'name' exists on the couchdb server at url. If so, return reference to the server object. Otherwise create a new DB called name at url then return the new server object.
