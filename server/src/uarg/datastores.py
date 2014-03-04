@@ -12,23 +12,23 @@ def init_data_db(name, url):
     
     Return: A CouchDB database object
     """   
-    db = dict()
-    global db
+    datadb = dict()
+    global datadb
     server = couchdb.client.Server(url)
 
     try: 
-        db[name] = server.create(name)
+        datadb[name] = server.create(name)
     except PreconditionFailed:
-        db[name] = server[name]
+        datadb[name] = server[name]
     except:
         current_app.logger.critical( "Failed to connect to the uARG database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG users database. Is the CouchDB server running?"
         exit(1)
-    return db[name]
+    return datadb[name]
 
 
 def get_dialogue_db():
-    return db[ current_app.config['datadb_name'] ]
+    return datadb[ current_app.config['datadb_name'] ]
 
 
 def add_view(db, design, view, fun):
