@@ -6,7 +6,7 @@ import couchdb
 from couchdb.http import PreconditionFailed, ResourceNotFound, ResourceConflict
 from flask import current_app
 
-def init_db(name, url):
+def init_data_db(name, url):
     """
     Check whether the database 'name' exists on the couchdb server at url. If so, return reference to the server object. Otherwise create a new DB called name at url then return the new server object.
     
