@@ -38,18 +38,6 @@ def add_db(name, url):
         exit(1)
     return db[name]
 
-def get_dialogue_db():
-    """
-    Return the dialogue DB
-    """
-    return db[ current_app.config['datadb_name'] ]
-
-def get_user_db():
-    """
-    Return the user DB
-    """
-    return db[ current_app.config['userdb_name'] ]
-
 
 def add_view(db, design, view, fun):
     """
@@ -62,3 +50,19 @@ def add_view(db, design, view, fun):
         db["_design/"+design] = design_doc
     except ResourceConflict:
         pass
+
+
+def get_dialogue_db():
+    """
+    Return the dialogue DB
+    """
+    return db[ current_app.config['datadb_name'] ]
+
+
+def get_user_db():
+    """
+    Return the user DB
+    """
+    return db[ current_app.config['userdb_name'] ]
+
+
