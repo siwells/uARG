@@ -80,12 +80,12 @@ def call_view(db_data, design, view, limit=None, skip=None):
     return requests.get( args ).text
     
 
-def list_dialogues_view():
+def list_dialogues_view(limit=None, skip=None):
     """
     Call the list dialogues view in the dialogue design document on the data DB
     """
     db_data = get_dialogue_db_connection_data()
-    r = call_view(db_data, "dialogues", "list_dialogues")
+    r = call_view(db_data, "dialogues", "list_dialogues", limit, skip)
     print "VIEW OUTPUT: ", r
 
 
