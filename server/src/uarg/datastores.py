@@ -86,7 +86,7 @@ def list_dialogues_view(limit=None, skip=None):
     """
     db_data = get_dialogue_db_connection_data()
     r = call_view(db_data, "dialogues", "list_dialogues", limit, skip)
-    print "VIEW OUTPUT: ", r
+    return r
 
 
 def get_dialogue_db():
