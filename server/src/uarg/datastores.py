@@ -2,6 +2,8 @@
 # as per http://www.python.org/dev/peps/pep-0263/
 
 import couchdb
+import json
+import requests
 
 from couchdb.http import PreconditionFailed, ResourceNotFound, ResourceConflict
 from flask import current_app
@@ -51,12 +53,48 @@ def add_view(db, design, view, fun):
     except ResourceConflict:
         pass
 
+def call_view(db_data, design, view, limit=None, skip=None):
+    """
+
+    """
+
+    view_url = "_design/"+design+"/_view/"+view
+    args = db_data["ip"] +":"+ db_data["port"] +"/"+ db_data["name"] +"/"+ view_url
+    
+    if limit is not None or skip is not None:
+        params = "?"
+        if limit is not None:
+            limit_str = "limit="+str(limit)
+            params = params + limit_str
+        if skip is not None:
+            skip_str = "skip="+str(skip)
+            params = params + skip_str
+        print params
+
+    return requests.get( args ).text
+    
+
+def list_dialogues_view():
+    """
+    Call the list dialogues view in the dialogue design document on the data DB
+    """
+    db_data = get_dialogue_db_connection_data()
+    r = call_view(db_data, "dialogues", "list_dialogues")
+    print "VIEW OUTPUT: ", r
+
 
 def get_dialogue_db():
     """
     Return the dialogue DB
     """
     return db[ current_app.config['datadb_name'] ]
+
+
+def get_dialogue_db_connection_data():
+    """
+    Return a dictionary contain key:value pairs for IP, Port, and DB Name
+    """
+    return {'ip':current_app.config["datadb_ipaddress"], 'port':current_app.config["datadb_port"], 'name':current_app.config["datadb_name"]}
 
 
 def get_user_db():
