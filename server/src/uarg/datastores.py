@@ -55,7 +55,13 @@ def add_view(db, design, view, fun):
 
 def call_view(db_data, design, view, limit=None, skip=None):
     """
+    Call the view in the design document on the DB identified by db_data
 
+    db_data is a dictionary containg {IP, port, name}
+    design should be the name of a design document in the DB identified in db_data
+    view must be a view in the previously identified design document
+
+    Returns: JSON data output by the CouchDB view
     """
 
     view_url = "_design/"+design+"/_view/"+view
