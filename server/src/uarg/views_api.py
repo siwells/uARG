@@ -60,8 +60,13 @@ def dialogue(dialogue_id = None):
             if 'referent' in data:
                 referent = data.get('referent')
 
-            dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
-            response_msg = "New dialogue created with root text '"+ content +"'"
+            doc_id =  dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
+            
+            payload['uid'] = doc_id
+            payload['txt'] = content
+
+            
+            response_msg = "New dialogue created"
 
         else:
             status = 'ko'
