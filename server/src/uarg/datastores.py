@@ -41,12 +41,14 @@ def add_db(name, url):
     return db[name]
 
 
-def add_view(db, design, view, fun):
+def add_view(db, design, view, mapfun, reducefun=None):
     """
     Adds view functions to the specified db by specifiying the design document, the view name & the search function
     """
-    
-    design_doc = { 'language':'javascript', 'views': { view: { 'map': fun}}}
+    if reducefun is not None:
+        design_doc = { 'language':'javascript', 'views': { view: { 'map': mapfun, 'reduce': reducefun}}}
+    else:
+        design_doc = { 'language':'javascript', 'views': { view: { 'map': mapfun }}}
     
     try: 
         db["_design/"+design] = design_doc
