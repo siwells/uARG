@@ -61,7 +61,7 @@ def dialogue(dialogue_id = None):
                 referent = data.get('referent')
 
             dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
-            response_msg = "New dialogue created with root text 'blah blah blah'"
+            response_msg = "New dialogue created with root text '"+ content +"'"
 
         else:
             status = 'ko'
