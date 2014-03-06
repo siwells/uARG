@@ -26,6 +26,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     doc_data = db.save(doc)
     return doc_data[0]
 
+
 def add_utterance(dialogue, speaker, referent, content, locution):
     """
 
