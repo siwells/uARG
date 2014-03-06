@@ -15,14 +15,16 @@ import utterance_data
 
 def new_dialogue(speaker, content, locution, referent = None):
     """
+    Create a new dialogue document
 
+    Return: the uuid for the newly created document
     """
     db = datastores.get_dialogue_db()
     now = str(datetime.now().isoformat())
     utterance = utterance_data.new_utterance(speaker, content, locution, referent)
     doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
-    doc_id = db.save(doc)
-
+    doc_data = db.save(doc)
+    return doc_data[0]
 
 def add_utterance(dialogue, speaker, referent, content, locution):
     """
