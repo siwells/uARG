@@ -17,7 +17,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     """
     Create a new dialogue document
 
-    Return: the uuid for the newly created document
+    Returns the uuid for the newly created document
     """
     db = datastores.get_dialogue_db()
     now = str(datetime.now().isoformat())
