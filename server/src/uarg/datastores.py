@@ -110,3 +110,9 @@ def get_user_db():
     return db[ current_app.config['userdb_name'] ]
 
 
+def get_user_db_connection_data():
+    """
+    Return a dictionary containing key:value pairs for IP, Port, & DB name for the user DB
+    """
+    return {'ip':current_app.config["userdb_ipaddress"], 'port':current_app.config["userdb_port"], 'name':current_app.config["userdb_name"]}
+
