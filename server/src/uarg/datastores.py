@@ -55,6 +55,22 @@ def add_view(db, design, view, mapfun, reducefun=None):
     except ResourceConflict:
         pass
 
+
+def get_design(db, design):
+    """
+    Get the design document from the specified DB
+    
+    Returns either the design document or else None
+    """
+    try:
+        doc = db["_design/"+design]
+        return doc
+    except ResourceNotFound: 
+        return None
+    except:
+        return None
+
+
 def call_view(db_data, design, view, limit=None, skip=None):
     """
     Call the view in the design document on the DB identified by db_data
