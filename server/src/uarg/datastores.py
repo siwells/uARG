@@ -59,7 +59,7 @@ def add_view(db, design, view, mapfun, reducefun=None):
         except ResourceConflict:
             pass
     else:
-        if not contains_view(db, design, view):
+        if not contains_view(design_doc, view):
             fun = { 'map': mapfun }
             design_doc['views'][view] = fun
             try: 
@@ -84,20 +84,17 @@ def get_design(db, design):
         return None
 
 
-def contains_view(db, design, view_name):
+def contains_view(design_doc, view_name):
     """
     Check whether the design_doc in the specified DB contains the nominated view
 
     True if the design contains the view, False otherwise
     """
 
-    design_doc = get_design(db, design)
-
     if design_doc is not None:
         key = None
         try:
             key = design_doc['views'][view_name]
-            #print design_doc
             if key is not None:
                 return True
         except KeyError:
