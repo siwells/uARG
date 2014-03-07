@@ -56,7 +56,7 @@ def add_view(db, design, view, mapfun, reducefun=None):
             pass
     else:
         if not contains_view(design_doc, view):
-            fun = { 'map': mapfun }
+            fun = construct_mapreduce_string(mapfun, reducefun)
             design_doc['views'][view] = fun
             try: 
                 db["_design/"+design] = design_doc
@@ -67,20 +67,28 @@ def construct_designdoc_string(view, mapfun, reducefun=None):
     """
 
     """
-    viewstring = construct_view_string(view, mapfun, reducefun)
-    design_doc = { 'language':'javascript', 'views': viewstring }
+    design_doc = {}
+    design_doc['language'] = 'javascript'
+    design_doc['views'] = construct_view_string(view, mapfun, reducefun)
     return design_doc
 
 def construct_view_string(view, mapfun, reducefun=None):
     """
 
     """
-    if reducefun is not None:
-        viewstring = { view: { 'map': mapfun, 'reduce': reducefun}}
-    else:
-        viewstring = { view: { 'map': mapfun }}
+    viewstring = {}
+    viewstring[view] = construct_mapreduce_string(mapfun, reducefun)
     return viewstring
 
+def construct_mapreduce_string(mapfun, reducefun=None):
+    """
+
+    """
+    fun = {}
+    fun['map'] = mapfun
+    if reducefun is not None:
+        fun['reduce'] = reducefun
+    return fun
 
 
 def get_design(db, design):
