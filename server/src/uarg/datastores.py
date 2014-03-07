@@ -23,9 +23,10 @@ def init(app):
 
     """
 
-    datadb = add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"], app.config["datadb_port"])
-    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"], app.config["userdb_port"])
+    add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"], app.config["datadb_port"])
+    add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"], app.config["userdb_port"])
     dataviews.init()
+
 
 def add_db(label, name, ip, port):
     """
@@ -36,28 +37,26 @@ def add_db(label, name, ip, port):
     server = couchdb.client.Server(ip+":"+port)
 
     try:
-        handle = { 'handle': server.create(name) }
-        db[label] = handle
-        db[label]['data'] = construct_db_data_dict(name, ip, port)
+        handle = server.create(name)
+        store_db_data(label, handle, name, ip, port)
     except PreconditionFailed:
-        handle = { 'handle': server[name] }
-        db[label] = handle
-        db[label]['data'] = construct_db_data_dict(name, ip, port)
+        handle = server[name]
+        store_db_data(label, handle, name, ip, port)
     except:
         logging.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
         exit(1)
 
-    return db[label]
 
+def store_db_data(label, handle, name, ip, port):
+    """
+    Store relevant DB connection information in the DB dict for easy retrieval by DB label
+    """
+    handle_dict = { 'handle': handle }
+    data_dict = {'ip':ip, 'port':port, 'name':name}
 
-def construct_db_data_dict(name, ip, port):
-    """
-    Return a dict containing the supplied Key:Value pairs for the supplied name, ip, and port
-    """
-    data = {'ip':ip, 'port':port, 'name':name}
-    return data
-    
+    db[label] = handle_dict
+    db[label]['data'] = data_dict    
 
 
 def get_dialogue_db():
