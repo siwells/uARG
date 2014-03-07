@@ -24,6 +24,7 @@ def init(app):
 
     add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"], app.config["datadb_port"])
     add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"], app.config["userdb_port"])
+
     dataviews.init()
 
 
