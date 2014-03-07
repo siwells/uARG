@@ -6,7 +6,6 @@ import json
 import requests
 
 from couchdb.http import PreconditionFailed, ResourceNotFound, ResourceConflict
-from flask import current_app
 
 import datastores
 
