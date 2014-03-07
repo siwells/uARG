@@ -49,40 +49,49 @@ def add_view(db, design, view, mapfun, reducefun=None):
 
     design_doc = get_design(db, design)
     if design_doc is None:
-        design_doc = construct_designdoc_string(view, mapfun, reducefun)    
+        design_doc = construct_designdoc(view, mapfun, reducefun)    
         try: 
             db["_design/"+design] = design_doc
         except ResourceConflict:
             pass
     else:
         if not contains_view(design_doc, view):
-            fun = construct_mapreduce_string(mapfun, reducefun)
+            fun = construct_mapreduce(mapfun, reducefun)
             design_doc['views'][view] = fun
             try: 
                 db["_design/"+design] = design_doc
             except ResourceConflict:
                 pass
 
-def construct_designdoc_string(view, mapfun, reducefun=None):
-    """
 
+def construct_designdoc(view, mapfun, reducefun=None):
+    """
+    Construct a dict that represents a CouchDB design doc
+
+    Returns a CouchDB design doc
     """
     design_doc = {}
     design_doc['language'] = 'javascript'
-    design_doc['views'] = construct_view_string(view, mapfun, reducefun)
+    design_doc['views'] = construct_view(view, mapfun, reducefun)
     return design_doc
 
-def construct_view_string(view, mapfun, reducefun=None):
-    """
 
+def construct_view(view, mapfun, reducefun=None):
+    """
+    Construct a dict representing a single view ready for inclusion in a CouchDB design doc
+
+    Returns a dict representing the CouchDB view function
     """
     viewstring = {}
-    viewstring[view] = construct_mapreduce_string(mapfun, reducefun)
+    viewstring[view] = construct_mapreduce(mapfun, reducefun)
     return viewstring
 
-def construct_mapreduce_string(mapfun, reducefun=None):
-    """
 
+def construct_mapreduce(mapfun, reducefun=None):
+    """
+    Construct the dict that encapsulates the map & (optionally) reduce functions
+
+    Returns a dict representing the map/reduce functions for a couchdb view
     """
     fun = {}
     fun['map'] = mapfun
