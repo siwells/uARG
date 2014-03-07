@@ -19,7 +19,7 @@ def init(app):
     userdb = add_db(app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
 
     add_view(datadb, "dialogues", "list_dialogues", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
-    add_view(datadb, "dialogues", "list_dialogues2", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
+    add_view(datadb, "dialogues", "list_dialogues2", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''', '''_count''')
     add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
 
 
@@ -49,11 +49,7 @@ def add_view(db, design, view, mapfun, reducefun=None):
 
     design_doc = get_design(db, design)
     if design_doc is None:
-        if reducefun is not None:
-            design_doc = { 'language':'javascript', 'views': { view: { 'map': mapfun, 'reduce': reducefun}}}
-        else:
-            design_doc = { 'language':'javascript', 'views': { view: { 'map': mapfun }}}
-    
+        design_doc = construct_designdoc_string(view, mapfun, reducefun)    
         try: 
             db["_design/"+design] = design_doc
         except ResourceConflict:
@@ -66,6 +62,25 @@ def add_view(db, design, view, mapfun, reducefun=None):
                 db["_design/"+design] = design_doc
             except ResourceConflict:
                 pass
+
+def construct_designdoc_string(view, mapfun, reducefun=None):
+    """
+
+    """
+    viewstring = construct_view_string(view, mapfun, reducefun)
+    design_doc = { 'language':'javascript', 'views': viewstring }
+    return design_doc
+
+def construct_view_string(view, mapfun, reducefun=None):
+    """
+
+    """
+    if reducefun is not None:
+        viewstring = { view: { 'map': mapfun, 'reduce': reducefun}}
+    else:
+        viewstring = { view: { 'map': mapfun }}
+    return viewstring
+
 
 
 def get_design(db, design):
