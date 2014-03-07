@@ -21,7 +21,7 @@ def init(app):
 
     """
 
-    datadb = add_db("datadb", app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
+    datadb = add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
     userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
 
     dataviews.init()
@@ -49,7 +49,7 @@ def get_dialogue_db():
     """
     Return the dialogue DB
     """
-    return db[ 'datadb' ]
+    return db[ 'dialoguedb' ]
 
 
 def get_dialogue_db_connection_data():
