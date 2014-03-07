@@ -18,7 +18,7 @@ def init():
 
     add_view(datadb, "dialogues", "list", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
     add_view(datadb, "dialogues", "count", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''', '''_count''')
-    add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
+    add_view(datadb, "utterances", "list", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
 
 
 def add_view(db, design, view, mapfun, reducefun=None):
