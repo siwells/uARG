@@ -15,17 +15,18 @@ db = dict()
 def init(app):
     """
     Initialise the databases & CouchDB views
+
+    Can only initialise views once the DBs have successfully been initialised so 
+    might as well do that here to ensure the right order is preserved.
+
     """
 
-    datadb = add_db(app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
-    userdb = add_db(app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
-    
-    dataviews.add_view(datadb, "dialogues", "list", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''')
-    dataviews.add_view(datadb, "dialogues", "count", ''' function(doc) { if(doc.type == 'dialogue') emit(doc._id, doc); } ''', '''_count''')
-    dataviews.add_view(datadb, "utterances", "list_utterances", ''' function(doc) { doc.transcript.forEach(function(utter){ emit(utter.uid, utter); }); } ''')
+    datadb = add_db("datadb", app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
+    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
 
+    dataviews.init()
 
-def add_db(name, url):
+def add_db(label, name, url):
     """
     Check whether the database 'name' exists on the couchdb server at url. If so, return reference to the server object. Otherwise create a new DB called name at url then return the new server object.
     
@@ -34,21 +35,21 @@ def add_db(name, url):
     server = couchdb.client.Server(url)
 
     try: 
-        db[name] = server.create(name)
+        db[label] = server.create(name)
     except PreconditionFailed:
-        db[name] = server[name]
+        db[label] = server[name]
     except:
         current_app.logger.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
         exit(1)
-    return db[name]
+    return db[label]
 
 
 def get_dialogue_db():
     """
     Return the dialogue DB
     """
-    return db[ current_app.config['datadb_name'] ]
+    return db[ 'datadb' ]
 
 
 def get_dialogue_db_connection_data():
@@ -62,7 +63,7 @@ def get_user_db():
     """
     Return the user DB
     """
-    return db[ current_app.config['userdb_name'] ]
+    return db[ 'userdb' ]
 
 
 def get_user_db_connection_data():
