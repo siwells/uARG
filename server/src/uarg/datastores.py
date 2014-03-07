@@ -64,7 +64,7 @@ def get_dialogue_db_connection_data():
     """
     Return a dictionary contain key:value pairs for IP, Port, and DB Name
     """
-    return {'ip':current_app.config["datadb_ipaddress"], 'port':current_app.config["datadb_port"], 'name':current_app.config["datadb_name"]}
+    return db_data[ 'dialoguedb' ]
 
 
 def get_user_db():
@@ -78,5 +78,7 @@ def get_user_db_connection_data():
     """
     Return a dictionary containing key:value pairs for IP, Port, & DB name for the user DB
     """
-    return {'ip':current_app.config["userdb_ipaddress"], 'port':current_app.config["userdb_port"], 'name':current_app.config["userdb_name"]}
+    return db_data[ 'userdb' ]
+
+
 
