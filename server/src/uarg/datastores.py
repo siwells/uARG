@@ -3,6 +3,7 @@
 
 import couchdb
 import json
+import logging
 import requests
 
 from couchdb.http import PreconditionFailed, ResourceNotFound, ResourceConflict
@@ -43,7 +44,7 @@ def add_db(label, name, ip, port):
         db[label] = handle
         db[label]['data'] = construct_db_data_dict(name, ip, port)
     except:
-        current_app.logger.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
+        logging.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
         exit(1)
 
