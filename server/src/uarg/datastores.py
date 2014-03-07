@@ -11,7 +11,7 @@ from flask import current_app
 import dataviews
 
 db = dict()
-db_data = dict()
+#db_data = dict()
 
 def init(app):
     """
@@ -22,29 +22,26 @@ def init(app):
 
     """
 
-    datadb = add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
-    db_data['dialoguedb'] = {   'ip':app.config["datadb_ipaddress"], 
-                                'port':app.config["datadb_port"], 
-                                'name':app.config["datadb_name"]}
-
-    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
-    db_data['userdb'] = {   'ip':app.config["userdb_ipaddress"], 
-                                'port':app.config["userdb_port"], 
-                                'name':app.config["userdb_name"]}
+    datadb = add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"], app.config["datadb_port"])
+    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"], app.config["userdb_port"])
     dataviews.init()
 
-def add_db(label, name, url):
+def add_db(label, name, ip, port):
     """
     Check whether the database 'name' exists on the couchdb server at url. If so, return reference to the server object. Otherwise create a new DB called name at url then return the new server object.
     
     Return: A CouchDB database object
-    """   
-    server = couchdb.client.Server(url)
+    """
+    server = couchdb.client.Server(ip+":"+port)
 
-    try: 
-        db[label] = server.create(name)
+    try:
+        handle = { 'handle': server.create(name) }
+        db[label] = handle
+        db[label]['data'] = construct_db_data_dict(name, ip, port)
     except PreconditionFailed:
-        db[label] = server[name]
+        handle = { 'handle': server[name] }
+        db[label] = handle
+        db[label]['data'] = construct_db_data_dict(name, ip, port)
     except:
         current_app.logger.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
@@ -53,32 +50,41 @@ def add_db(label, name, url):
     return db[label]
 
 
+def construct_db_data_dict(name, ip, port):
+    """
+    Return a dict containing the supplied Key:Value pairs for the supplied name, ip, and port
+    """
+    data = {'ip':ip, 'port':port, 'name':name}
+    return data
+    
+
+
 def get_dialogue_db():
     """
     Return the dialogue DB
     """
-    return db[ 'dialoguedb' ]
+    return db['dialoguedb']['handle']
 
 
 def get_dialogue_db_connection_data():
     """
     Return a dictionary contain key:value pairs for IP, Port, and DB Name
     """
-    return db_data[ 'dialoguedb' ]
+    return db_data['dialoguedb']['data']
 
 
 def get_user_db():
     """
     Return the user DB
     """
-    return db[ 'userdb' ]
+    return db['userdb']['handle']
 
 
 def get_user_db_connection_data():
     """
     Return a dictionary containing key:value pairs for IP, Port, & DB name for the user DB
     """
-    return db_data[ 'userdb' ]
+    return db_data['userdb']['data']
 
 
 
