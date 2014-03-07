@@ -12,7 +12,6 @@ from flask import current_app
 import dataviews
 
 db = dict()
-#db_data = dict()
 
 def init(app):
     """
