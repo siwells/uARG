@@ -11,6 +11,7 @@ from flask import current_app
 import dataviews
 
 db = dict()
+db_data = dict()
 
 def init(app):
     """
@@ -22,8 +23,14 @@ def init(app):
     """
 
     datadb = add_db("dialoguedb", app.config["datadb_name"], app.config["datadb_ipaddress"] + ":" + app.config["datadb_port"])
-    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
+    db_data['dialoguedb'] = {   'ip':app.config["datadb_ipaddress"], 
+                                'port':app.config["datadb_port"], 
+                                'name':app.config["datadb_name"]}
 
+    userdb = add_db("userdb", app.config["userdb_name"], app.config["userdb_ipaddress"] + ":" + app.config["userdb_port"])
+    db_data['userdb'] = {   'ip':app.config["userdb_ipaddress"], 
+                                'port':app.config["userdb_port"], 
+                                'name':app.config["userdb_name"]}
     dataviews.init()
 
 def add_db(label, name, url):
@@ -42,6 +49,7 @@ def add_db(label, name, url):
         current_app.logger.critical( "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?" )
         print "Failed to connect to the uARG "+name+" database. Is the CouchDB server running?"
         exit(1)
+
     return db[label]
 
 
