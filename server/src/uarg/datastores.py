@@ -68,7 +68,6 @@ def add_view(db, design, view, mapfun, reducefun=None):
                 pass
 
 
-
 def get_design(db, design):
     """
     Get the design document from the specified DB
