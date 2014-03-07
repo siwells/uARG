@@ -44,7 +44,7 @@ def add_db(name, url):
 
 def add_view(db, design, view, mapfun, reducefun=None):
     """
-    Adds view functions to the specified db by specifiying the design document, the view name & the search function
+    Adds view functions to the specified db by specifiying the design document, the view name & the map/reduce functions
     """
 
     design_doc = get_design(db, design)
