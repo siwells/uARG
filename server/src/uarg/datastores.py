@@ -86,7 +86,7 @@ def get_design(db, design):
 
 def contains_view(design_doc, view_name):
     """
-    Check whether the design_doc in the specified DB contains the nominated view
+    Check whether the supplied design_doc contains the nominated view
 
     True if the design contains the view, False otherwise
     """
