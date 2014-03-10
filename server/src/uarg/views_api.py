@@ -173,6 +173,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
+    status_code = 200
     dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
@@ -181,8 +182,8 @@ def dialogues():
     _links = { "self": { "href": url_for('.dialogues', _external=True) }}
     msg = "List of dialogues retrieved successfully from server"
 
-    response = {'status':'ok', 'statusCode': 200, 'message':msg, 'data':data, '_links': _links}
+    response = {'status':'ok', 'statusCode': status_code, 'message':msg, 'data':data, '_links': _links}
     current_app.logger.info(msg)
-    return jsonify( response )
+    return jsonify( response ), status_code
 
 
