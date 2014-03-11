@@ -160,6 +160,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
 
     return jsonify( response )
 
+
 @api.route('/dialogues')
 def dialogues():
     """
@@ -173,6 +174,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
+    errors = {}
     status_code = 200
     dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
