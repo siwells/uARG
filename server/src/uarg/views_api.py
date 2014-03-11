@@ -174,7 +174,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
-    errors = {}
+    errors = []
     status = 200
     dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
