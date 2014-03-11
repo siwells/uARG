@@ -184,7 +184,7 @@ def dialogues():
     _links = { "self": { "href": url_for('.dialogues', _external=True) }}
     msg = "List of dialogues retrieved successfully from server"
 
-    response = {'status':'ok', 'statusCode': status_code, 'message':msg, 'data':data, '_links': _links}
+    response = {'status':'ok', 'statusCode': status_code, 'message':msg, 'data':data, '_links': _links, 'errors': errors}
     current_app.logger.info(msg)
     return jsonify( response ), status_code
 
