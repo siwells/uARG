@@ -83,17 +83,18 @@ def dialogue(dialogue_id = None):
 def dialogue_id(dialogue_id = None):
     """
     """
-    response_msg = None
-    payload = {}
+    errors = []
+    msg = None
+    data = {}
     status = 'ok'
-    status_code = 200
+    code = 200
     _links = { "self": { "href": url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) }}
     
     if request.method == 'GET':
         """
         Retrieves the dialogue identified by dialogue_id
         """
-        response_msg = "GET /api/dialogue/"+dialogue_id
+        msg = "GET /api/dialogue/"+dialogue_id
         dialogue = dialogue_data.get_dialogue(dialogue_id)
         
         if dialogue is not None:
@@ -102,11 +103,11 @@ def dialogue_id(dialogue_id = None):
                 u.update({ "_links": { "self": { "href":url }}})
 
 
-        payload = dialogue
+        data = dialogue
 
-        if payload is None:
+        if data is None:
             status = 'ko'
-            response_msg = "Failed to GET /api/dialogue/"+dialogue_id
+            msg = "Failed to GET /api/dialogue/"+dialogue_id
 
     elif request.method == 'POST':
         """
@@ -123,10 +124,9 @@ def dialogue_id(dialogue_id = None):
 
             dialogue_data.add_utterance(dialogue_id, "3298h3hiu3h2u", referent, content, locution)
             
-            response_msg = "POST /api/dialogue/"+dialogue_id
+            msg = "POST /api/dialogue/"+dialogue_id
 
-
-    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
+    response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
     return jsonify( response )
