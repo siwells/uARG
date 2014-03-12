@@ -174,10 +174,7 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
-    data = []
     errors = []
-    response = {}
-
     status = 'ok'
     code = 200
     dialogues = dialogue_data.get_dialogues()
@@ -187,6 +184,7 @@ def dialogues():
     _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
+    response = {}
     response['status'] = status
     response['code'] = code
     response['message'] = msg
