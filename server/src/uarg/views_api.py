@@ -18,7 +18,7 @@ def root():
     msg = "GET /api/ - This should return basic information about using the API from this route onwards"
     response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
-    return jsonify( response )
+    return jsonify( response ), code
 
 
 @api.route('/dialogue', methods=['POST'])
@@ -82,7 +82,7 @@ def dialogue(dialogue_id = None):
     response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
-    return jsonify( response )
+    return jsonify( response ), code
 
 
 @api.route('/dialogue/<dialogue_id>', methods=['GET','POST'])
@@ -135,7 +135,7 @@ def dialogue_id(dialogue_id = None):
     response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
-    return jsonify( response )
+    return jsonify( response ), code
 
 
 @api.route('/dialogue/<dialogue_id>/utterance/<utterance_id>', methods=['GET'])
@@ -168,7 +168,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
     response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
 
-    return jsonify( response )
+    return jsonify( response ), code
 
 
 @api.route('/dialogues')
@@ -197,7 +197,7 @@ def dialogues():
     response = build_response(msg, status, code, data, errors, _links)
 
     current_app.logger.info(msg)
-    return jsonify( response ), status
+    return jsonify( response ), code
 
 
 def build_response(msg, status='ok', code=200, data=[], errors=[], _links={}):
