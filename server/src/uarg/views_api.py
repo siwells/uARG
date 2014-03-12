@@ -88,7 +88,7 @@ def dialogue_id(dialogue_id = None):
     data = {}
     status = 'ok'
     code = 200
-    _links = { "self": { "href": url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) }}
+    _links = assemble_links([get_link('self', url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) )])
     
     if request.method == 'GET':
         """
@@ -99,9 +99,9 @@ def dialogue_id(dialogue_id = None):
         
         if dialogue is not None:
             for u in dialogue['transcript']:
-                url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True) 
-                u.update({ "_links": { "self": { "href":url }}})
-
+                url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True)
+                link = assemble_links([get_link('self', url )])
+                u.update( { "_links": link } )
 
         data = dialogue
 
