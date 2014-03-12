@@ -174,13 +174,14 @@ def dialogues():
         date {since & until params to enable time periods}
         activity
     """
+    data = []
     errors = []
     status = 'ok'
     code = 200
     dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
-    data = [ {"uid": d, "_links":{ "self": {"href": dialogue_url + d }}} for d in dialogues  ]
+    data = [ {"uid": d, "_links": assemble_links([ get_link('self', dialogue_url + d) ]) } for d in dialogues  ]
     _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
