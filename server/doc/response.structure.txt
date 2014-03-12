@@ -1,0 +1,52 @@
+
+
+Response Structure
+
+{
+    'status': '',
+    'message': '',
+    'code': ,
+    '_links': {},
+    'data': [],
+    'errors' []:
+}
+
+
+'status' = {'ok' | 'ko'}
+
+
+'message' = 'string describing the response'
+
+
+'code' = 'HTTP status code'
+
+
+'_links'
+
+{
+    'self': { 'href': '', }
+}
+
+where there can be links to:
+    * help
+    * describes
+
+
+'data' = [] of {}
+
+{
+    'uid': '', 
+    '_links': $ref 
+}
+
+
+'errors' = [] of {}
+
+{
+    'message': '',
+    'logref': '',
+    '_links': $ref
+}
+
+
+
