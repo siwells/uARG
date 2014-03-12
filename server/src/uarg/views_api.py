@@ -176,6 +176,8 @@ def dialogues():
     """
     data = []
     errors = []
+    response = {}
+
     status = 'ok'
     code = 200
     dialogues = dialogue_data.get_dialogues()
@@ -185,7 +187,13 @@ def dialogues():
     _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
-    response = {'status':status, 'code':code, 'message':msg, 'data':data, '_links':_links, 'errors':errors}
+    response['status'] = status
+    response['code'] = code
+    response['message'] = msg
+    response['data'] = data
+    response['_links'] = _links
+    response['errors'] = errors
+
     current_app.logger.info(msg)
     return jsonify( response ), status
 
