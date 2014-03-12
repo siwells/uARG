@@ -141,7 +141,8 @@ def utterance_id(dialogue_id = None, utterance_id = None):
     data = {}
     status = 'ok'
     code = 200
-    _links = { "self": { "href": url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) }}
+
+    _links = assemble_links([get_link('self', url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) )])
 
     utterance_txt = None
     speaker = None
