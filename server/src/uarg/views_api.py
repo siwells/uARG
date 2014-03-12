@@ -181,12 +181,36 @@ def dialogues():
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
     data = [ {"uid": d, "_links":{ "self": {"href": dialogue_url + d }}} for d in dialogues  ]
-
-    _links = { "self": { "href": url_for('.dialogues', _external=True) }}
+    _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
     response = {'status':status, 'code':code, 'message':msg, 'data':data, '_links':_links, 'errors':errors}
     current_app.logger.info(msg)
     return jsonify( response ), status
+
+
+def assemble_links(links=[]):
+    """
+
+    """
+    _links = {}
+    for link in links:
+        for key in link:
+            _links[key] = link[key]
+
+    return _links
+
+
+def get_link(name, url):
+    """
+    Construct a HAL compliant link for inclusion in _links dict
+    """
+    href = {}
+    href['href'] = url
+
+    link = {}
+    link[name] = href
+    return link
+
 
 
