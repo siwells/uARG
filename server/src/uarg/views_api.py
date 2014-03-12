@@ -136,10 +136,11 @@ def dialogue_id(dialogue_id = None):
 def utterance_id(dialogue_id = None, utterance_id = None):
     """
     """
-    response_msg = None
-    payload = {}
+    errors = []
+    msg = None
+    data = {}
     status = 'ok'
-    status_code = 200
+    code = 200
     _links = { "self": { "href": url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) }}
 
     utterance_txt = None
@@ -153,9 +154,9 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         if utterance_id is not None and dialogue_id is not None:
             response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
-            payload = dialogue_data.get_utterance(dialogue_id, utterance_id)[0]
+            data = dialogue_data.get_utterance(dialogue_id, utterance_id)[0]
 
-    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload, '_links': _links}
+    response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
 
     return jsonify( response )
@@ -188,6 +189,7 @@ def dialogues():
 
     current_app.logger.info(msg)
     return jsonify( response ), status
+
 
 def build_response(msg, status='ok', code=200, data=[], errors=[], _links={}):
     """
