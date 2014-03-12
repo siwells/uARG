@@ -184,6 +184,15 @@ def dialogues():
     _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
+    response = build_response(msg, status, code, data, errors, _links)
+
+    current_app.logger.info(msg)
+    return jsonify( response ), status
+
+def build_response(msg, status='ok', code=200, data=[], errors=[], _links={}):
+    """
+    Build a response dict to return from the API
+    """
     response = {}
     response['status'] = status
     response['code'] = code
@@ -191,9 +200,7 @@ def dialogues():
     response['data'] = data
     response['_links'] = _links
     response['errors'] = errors
-
-    current_app.logger.info(msg)
-    return jsonify( response ), status
+    return response
 
 
 def get_error(message, logref=None, _links=None):
