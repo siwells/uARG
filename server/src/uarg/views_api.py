@@ -68,6 +68,8 @@ def dialogue(dialogue_id = None):
             
             data['uid'] = doc_id
             data['txt'] = content
+            url = url_for('.dialogue_id', dialogue_id=doc_id, _external=True)
+            data['_links'] = assemble_links([get_link('self', url )])
 
             
             msg = "New dialogue created"
