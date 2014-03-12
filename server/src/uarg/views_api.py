@@ -23,10 +23,12 @@ def root():
 def dialogue(dialogue_id = None):
     """
     """
-    response_msg = None
-    payload = {}
+    errors = []
+    msg = None
+    data = {}
     status = 'ok'
-    status_code = 200
+    code = 200
+    _links = assemble_links([get_link('self', url_for('.dialogue', _external=True) )])
 
     if request.method == 'POST':
         """
@@ -48,32 +50,32 @@ def dialogue(dialogue_id = None):
 
         Returns a response containing the UUID for the new dialogue
         """
-        data = request.json
-        if 'content' in data:
-            content = data.get('content')
-            if 'locution' in data:
-                locution = data.get('locution')
+        payload = request.json
+        if 'content' in payload:
+            content = payload.get('content')
+            if 'locution' in payload:
+                locution = payload.get('locution')
             else:
                 locution = "claim"
 
             referent = None
-            if 'referent' in data:
-                referent = data.get('referent')
+            if 'referent' in payload:
+                referent = payload.get('referent')
 
             doc_id =  dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
             
-            payload['uid'] = doc_id
-            payload['txt'] = content
+            data['uid'] = doc_id
+            data['txt'] = content
 
             
-            response_msg = "New dialogue created"
+            msg = "New dialogue created"
 
         else:
             status = 'ko'
-            status_code = 400
+            code = 400
             response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
-        
-    response = {'status':status, 'status_code': status_code, 'message':response_msg, 'data':payload}
+    
+    response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
     return jsonify( response )
