@@ -91,5 +91,8 @@ def get_utterance(dialogue_uuid = None, utterance_uuid = None):
     if doc is not None:
         transcript = doc['transcript']
         if utterance_uuid is not None:
-            return [ u for u in transcript if u['uid']==utterance_uuid ]
+            for u in transcript:
+                if u['uid'] == utterance_uuid:
+                    return u
+
 

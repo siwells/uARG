@@ -155,9 +155,9 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         if utterance_id is not None and dialogue_id is not None:
             response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
-            d = dialogue_data.get_utterance(dialogue_id, utterance_id)
-            if d is not None and len(d) > 0:
-                data = d[0]
+            utterance = dialogue_data.get_utterance(dialogue_id, utterance_id)
+            if utterance is not None:
+                data = utterance
 
     response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
