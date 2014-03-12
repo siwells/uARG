@@ -190,6 +190,18 @@ def dialogues():
     return jsonify( response ), status
 
 
+def get_error(message, logref=None, _links=None):
+    """
+    Return a dict representing a single error to report in the response doc
+    """
+    error = {}
+    error['message'] = message
+    error['logref'] = logref
+    error['_links'] = _links
+
+    return error
+
+
 def assemble_links(links=[]):
     """
     Construct a HAL compliant _links dict for inclusion in a response doc
@@ -214,6 +226,5 @@ def get_link(name, url):
     link = {}
     link[name] = href
     return link
-
 
 
