@@ -191,7 +191,9 @@ def dialogues():
 
 def assemble_links(links=[]):
     """
+    Construct a HAL compliant _links dict for inclusion in a response doc
 
+    Return a HAL compliant _links dict for inclusion in a response doc
     """
     _links = {}
     for link in links:
