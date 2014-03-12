@@ -10,12 +10,14 @@ import dialogue_data
 def root():
     """
     """
-    payload = {}
-    response_msg = "GET /api/ - This should return basic information about using the API from this route onwards"
-    response = {'status':'ok', 'statusCode': 200, 'message':response_msg, 'data':payload}
-
+    errors = []
+    data = []
+    status = 'ok'
+    code = 200
+    _links = assemble_links([get_link('self', url_for('.root', _external=True) )])
+    msg = "GET /api/ - This should return basic information about using the API from this route onwards"
+    response = build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
-
     return jsonify( response )
 
 
