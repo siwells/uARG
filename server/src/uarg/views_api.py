@@ -5,6 +5,7 @@ from flask import Blueprint, current_app, json, jsonify, request, url_for
 api = Blueprint("api", __name__, url_prefix='/api')
 
 import dialogue_data
+import responses
 
 @api.route('/')
 def root():
@@ -14,9 +15,9 @@ def root():
     data = []
     status = 'ok'
     code = 200
-    _links = assemble_links([get_link('self', url_for('.root', _external=True) )])
+    _links = responses.assemble_links([responses.get_link('self', url_for('.root', _external=True) )])
     msg = "GET /api/ - This should return basic information about using the API from this route onwards"
-    response = build_response(msg, status, code, data, errors, _links)
+    response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
     return jsonify( response ), code
 
@@ -30,7 +31,7 @@ def dialogue(dialogue_id = None):
     data = {}
     status = 'ok'
     code = 200
-    _links = assemble_links([get_link('self', url_for('.dialogue', _external=True) )])
+    _links = responses.assemble_links([responses.get_link('self', url_for('.dialogue', _external=True) )])
 
     if request.method == 'POST':
         """
@@ -69,7 +70,7 @@ def dialogue(dialogue_id = None):
             data['uid'] = doc_id
             data['txt'] = content
             url = url_for('.dialogue_id', dialogue_id=doc_id, _external=True)
-            data['_links'] = assemble_links([get_link('self', url )])
+            data['_links'] = responses.assemble_links([responses.get_link('self', url )])
 
             
             msg = "New dialogue created"
@@ -79,7 +80,7 @@ def dialogue(dialogue_id = None):
             code = 400
             response_msg = "POST to /api/dialogue failed to create a new dialogue. The minimum required keys were not provided"
     
-    response = build_response(msg, status, code, data, errors, _links)
+    response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
     return jsonify( response ), code
@@ -94,7 +95,7 @@ def dialogue_id(dialogue_id = None):
     data = {}
     status = 'ok'
     code = 200
-    _links = assemble_links([get_link('self', url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) )])
+    _links = responses.assemble_links([responses.get_link('self', url_for('.dialogue_id', dialogue_id=dialogue_id, _external=True) )])
     
     if request.method == 'GET':
         """
@@ -106,7 +107,7 @@ def dialogue_id(dialogue_id = None):
         if dialogue is not None:
             for u in dialogue['transcript']:
                 url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True)
-                link = assemble_links([get_link('self', url )])
+                link = responses.assemble_links([responses.get_link('self', url )])
                 u.update( { "_links": link } )
 
         data = dialogue
@@ -132,7 +133,7 @@ def dialogue_id(dialogue_id = None):
             
             msg = "POST /api/dialogue/"+dialogue_id
 
-    response = build_response(msg, status, code, data, errors, _links)
+    response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info(response)
 
     return jsonify( response ), code
@@ -148,7 +149,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
     status = 'ok'
     code = 200
 
-    _links = assemble_links([get_link('self', url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) )])
+    _links = responses.assemble_links([responses.get_link('self', url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=utterance_id, _external=True) )])
 
     utterance_txt = None
     speaker = None
@@ -165,7 +166,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
             if utterance is not None:
                 data = utterance
 
-    response = build_response(msg, status, code, data, errors, _links)
+    response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
 
     return jsonify( response ), code
@@ -190,65 +191,13 @@ def dialogues():
     dialogues = dialogue_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
-    data = [ {"uid": d, "_links": assemble_links([ get_link('self', dialogue_url + d) ]) } for d in dialogues  ]
-    _links = assemble_links([get_link('self', url_for('.dialogues', _external=True) )])
+    data = [ {"uid": d, "_links": responses.assemble_links([ responses.get_link('self', dialogue_url + d) ]) } for d in dialogues  ]
+    _links = responses.assemble_links([responses.get_link('self', url_for('.dialogues', _external=True) )])
     msg = "List of dialogues retrieved successfully from server"
 
-    response = build_response(msg, status, code, data, errors, _links)
+    response = responses.build_response(msg, status, code, data, errors, _links)
 
     current_app.logger.info(msg)
     return jsonify( response ), code
-
-
-def build_response(msg, status='ok', code=200, data=[], errors=[], _links={}):
-    """
-    Build a response dict to return from the API
-    """
-    response = {}
-    response['status'] = status
-    response['code'] = code
-    response['message'] = msg
-    response['data'] = data
-    response['_links'] = _links
-    response['errors'] = errors
-    return response
-
-
-def get_error(message, logref=None, _links=None):
-    """
-    Return a dict representing a single error to report in the response doc
-    """
-    error = {}
-    error['message'] = message
-    error['logref'] = logref
-    error['_links'] = _links
-
-    return error
-
-
-def assemble_links(links=[]):
-    """
-    Construct a HAL compliant _links dict for inclusion in a response doc
-
-    Return a HAL compliant _links dict for inclusion in a response doc
-    """
-    _links = {}
-    for link in links:
-        for key in link:
-            _links[key] = link[key]
-
-    return _links
-
-
-def get_link(name, url):
-    """
-    Construct a HAL compliant link for inclusion in _links dict
-    """
-    href = {}
-    href['href'] = url
-
-    link = {}
-    link[name] = href
-    return link
 
 
