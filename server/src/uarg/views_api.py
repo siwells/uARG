@@ -109,7 +109,8 @@ def dialogue_id(dialogue_id = None):
                 url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True)
                 link = responses.assemble_links([responses.get_link('self', url )])
                 u.update( { "_links": link } )
-           
+            msg = "Retrieved Dialogue #"+dialogue_id
+
         else:
             status = 'ko'
             msg = "Failed to GET /api/dialogue/"+dialogue_id
