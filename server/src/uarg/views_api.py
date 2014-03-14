@@ -102,17 +102,15 @@ def dialogue_id(dialogue_id = None):
         Retrieves the dialogue identified by dialogue_id
         """
         msg = "GET /api/dialogue/"+dialogue_id
-        dialogue = dialogue_data.get_dialogue(dialogue_id)
+        data = dialogue_data.get_dialogue(dialogue_id)
         
-        if dialogue is not None:
-            for u in dialogue['transcript']:
+        if data is not None:
+            for u in data['transcript']:
                 url = url_for('.utterance_id', dialogue_id=dialogue_id, utterance_id=u['uid'], _external=True)
                 link = responses.assemble_links([responses.get_link('self', url )])
                 u.update( { "_links": link } )
-
-        data = dialogue
-
-        if data is None:
+           
+        else:
             status = 'ko'
             msg = "Failed to GET /api/dialogue/"+dialogue_id
 
