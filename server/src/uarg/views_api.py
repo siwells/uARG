@@ -165,6 +165,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
             utterance = dialogue_data.get_utterance(dialogue_id, utterance_id)
             if utterance is not None:
                 data = utterance
+                msg = "Retrieved utterance #"+utterance_id
 
     response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
