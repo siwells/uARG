@@ -29,6 +29,10 @@ def init(app):
         app.config['dialoguedb_ipaddress'] = config.get("dialoguedb", "ip_address")
         app.config['dialoguedb_port'] = config.get("dialoguedb", "port")
 
+        app.config['utterancedb_name'] = config.get("utterancedb", "name")
+        app.config['utterancedb_ipaddress'] = config.get("utterancedb", "ip_address")
+        app.config['utterancedb_port'] = config.get("utterancedb", "port")
+
         app.config['log_file'] = config.get("logging", "name")
         app.config['log_location'] = config.get("logging", "location")
         app.config['log_level'] = config.get("logging", "level")
