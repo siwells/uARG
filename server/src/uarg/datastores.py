@@ -85,6 +85,13 @@ def get_dialogue_db_connection_data():
     return db_data['dialoguedb']['data']
 
 
+def get_utterance_db():
+    """
+    Return handle to the utterance DB
+    """
+    return db['utterancedb']['handle']
+
+
 def get_user_db():
     """
     Return the user DB
@@ -97,6 +104,5 @@ def get_user_db_connection_data():
     Return a dictionary containing key:value pairs for IP, Port, & DB name for the user DB
     """
     return db_data['userdb']['data']
-
 
 
