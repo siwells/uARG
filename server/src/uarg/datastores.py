@@ -92,6 +92,13 @@ def get_utterance_db():
     return db['utterancedb']['handle']
 
 
+def get_utterance_db_connection_data():
+    """
+    Return a dictionary containing key:value pairs for IP, Port, and DB Name
+    """
+    return db_data['utterancedb']['data']
+
+
 def get_user_db():
     """
     Return the user DB
