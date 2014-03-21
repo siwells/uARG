@@ -27,6 +27,11 @@ def init(app):
         app.config["dialoguedb_ipaddress"], 
         app.config["dialoguedb_port"])
 
+    add_db("utterancedb", 
+        app.config["utterancedb_name"], 
+        app.config["utterancedb_ipaddress"], 
+        app.config["utterancedb_port"])
+
     add_db("userdb", 
         app.config["userdb_name"], 
         app.config["userdb_ipaddress"], 
