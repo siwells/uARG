@@ -4,7 +4,7 @@
 from flask import Blueprint, current_app, json, jsonify, request, url_for
 api = Blueprint("api", __name__, url_prefix='/api')
 
-import dialogue_data
+import uarg_data
 import responses
 
 @api.route('/')
@@ -65,7 +65,7 @@ def dialogue(dialogue_id = None):
             if 'referent' in payload:
                 referent = payload.get('referent')
 
-            doc_id =  dialogue_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
+            doc_id =  uarg_data.new_dialogue("3298h3hiu3h2u", content, locution, referent)
             
             data['uid'] = doc_id
             data['txt'] = content
@@ -102,7 +102,7 @@ def dialogue_id(dialogue_id = None):
         Retrieves the dialogue identified by dialogue_id
         """
         msg = "GET /api/dialogue/"+dialogue_id
-        data = dialogue_data.get_dialogue(dialogue_id)
+        data = uarg_data.get_dialogue(dialogue_id)
         
         if data is not None:
             for u in data['transcript']:
@@ -128,7 +128,7 @@ def dialogue_id(dialogue_id = None):
             content = data.get('content')
             locution = data.get('locution')
 
-            dialogue_data.add_utterance(dialogue_id, "3298h3hiu3h2u", referent, content, locution)
+            uarg_data.add_utterance(dialogue_id, "3298h3hiu3h2u", referent, content, locution)
             
             msg = "POST /api/dialogue/"+dialogue_id
 
@@ -161,7 +161,7 @@ def utterance_id(dialogue_id = None, utterance_id = None):
         """
         if utterance_id is not None and dialogue_id is not None:
             response_msg = "GET /api/dialogue/"+dialogue_id+"/utterance/"+utterance_id
-            utterance = dialogue_data.get_utterance(dialogue_id, utterance_id)
+            utterance = uarg_data.get_utterance(dialogue_id, utterance_id)
             if utterance is not None:
                 data = utterance
                 msg = "Retrieved utterance #"+utterance_id
@@ -188,7 +188,7 @@ def dialogues():
     errors = []
     status = 'ok'
     code = 200
-    dialogues = dialogue_data.get_dialogues()
+    dialogues = uarg_data.get_dialogues()
     dialogue_url = url_for('.dialogue', _external=True) + "/"
 
     data = [ {"uid": d, "_links": responses.assemble_links([ responses.get_link('self', dialogue_url + d) ]) } for d in dialogues  ]
