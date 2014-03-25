@@ -20,12 +20,17 @@ def new_dialogue(speaker, content, locution, referent = None):
 
     Returns the uuid for the newly created document
     """
-    db = datastores.get_dialogue_db()
+    udb = datastores.get_utterance_db()
+    ddb = datastores.get_dialogue_db()
+
+    udoc = utterances.new_utterance(speaker, content, locution, referent)
+    udocid,rev = udb.save(udoc)
+
     now = str(datetime.now().isoformat())
-    utterance = utterances.new_utterance(speaker, content, locution, referent)
-    doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
-    doc_data = db.save(doc)
-    return doc_data[0]
+    ddoc = {"created": now, "type": "dialogue" , "transcript":[ udocid ]}
+    ddocid,rev = ddb.save(ddoc)
+    
+    return ddocid
 
 
 def add_utterance(dialogue, speaker, referent, content, locution):
