@@ -11,7 +11,7 @@ from flask import current_app
 
 import datastores
 import dataviews
-import utterance_data
+import utterances
 
 
 def new_dialogue(speaker, content, locution, referent = None):
@@ -22,7 +22,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     """
     db = datastores.get_dialogue_db()
     now = str(datetime.now().isoformat())
-    utterance = utterance_data.new_utterance(speaker, content, locution, referent)
+    utterance = utterances.new_utterance(speaker, content, locution, referent)
     doc = {"created": now, "type": "dialogue" , "transcript":[utterance]}
     doc_data = db.save(doc)
     return doc_data[0]
@@ -34,7 +34,7 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     """
     db = datastores.get_dialogue_db()
     doc = db[dialogue]
-    utterance = utterance_data.new_utterance(speaker, content, locution, referent)
+    utterance = utterances.new_utterance(speaker, content, locution, referent)
     doc['transcript'].append(utterance)
     doc_id = db.save(doc)
 
