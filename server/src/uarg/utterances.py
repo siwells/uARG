@@ -12,7 +12,7 @@ def new_utterance(speaker, content, locution, referent = None):
     uid = str(UUID.uuid4())
     now = str(datetime.now().isoformat())
     
-    utterance = {'timestamp':now, 'speaker':speaker, 'content':content, 
+    utterance = {'timestamp':now, "type": "utterance", 'speaker':speaker, 'content':content, 
         'locution':locution, 'referent':referent}
 
     return utterance
