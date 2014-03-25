@@ -27,7 +27,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     udocid,rev = udb.save(udoc)
 
     now = str(datetime.now().isoformat())
-    ddoc = {"created": now, "type": "dialogue" , "transcript":[ udocid ]}
+    ddoc = {"created": now, "type": "dialogue" , "transcript":[ { "uid":udocid } ]}
     ddocid,rev = ddb.save(ddoc)
     
     return ddocid
@@ -44,7 +44,7 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     udocid,rev = udb.save(udoc)
 
     ddoc = ddb[dialogue]
-    ddoc['transcript'].append(udocid)
+    ddoc['transcript'].append( { "uid":udocid } )
     ddocid,rev = ddb.save(ddoc)
 
 
