@@ -37,11 +37,15 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     """
 
     """
-    db = datastores.get_dialogue_db()
-    doc = db[dialogue]
-    utterance = utterances.new_utterance(speaker, content, locution, referent)
-    doc['transcript'].append(utterance)
-    doc_id = db.save(doc)
+    udb = datastores.get_utterance_db()
+    ddb = datastores.get_dialogue_db()
+
+    udoc = utterances.new_utterance(speaker, content, locution, referent)
+    udocid,rev = udb.save(udoc)
+
+    ddoc = ddb[dialogue]
+    ddoc['transcript'].append(udocid)
+    ddocid,rev = ddb.save(ddoc)
 
 
 def get_dialogue(dialogue_uuid):
