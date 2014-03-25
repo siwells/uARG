@@ -25,8 +25,7 @@ And retrieve it:
 (A) Respond to something said in the dialogue by utterance_uuid:
     $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/{dialogue_uuid} -d '{"referent":"jsdj23-32de-d3" , "content":"wasps are not nice", "locution":"assertion"}' -X POST | jq '.'
 
-(B) Or respond to something said in the dialogue by utterance index:
-    $ curl -s -H "Content-type: application/json" http://127.0.0.1:5000/api/dialogue/{dialogue_uuid} -d '{"utterance_index":1 , "response_txt":"wasps are not nice", "response_type":"assertion"}' -X POST | jq '.'
+
 
 
 
