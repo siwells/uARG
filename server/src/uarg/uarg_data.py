@@ -96,12 +96,13 @@ def get_utterance(dialogue_uuid = None, utterance_uuid = None):
 
         TODO: Add just utterance_uuid
     """
-    doc = get_dialogue(dialogue_uuid)
-    if doc is not None:
-        transcript = doc['transcript']
-        if utterance_uuid is not None:
-            for u in transcript:
-                if u['uid'] == utterance_uuid:
-                    return u
+    udb = datastores.get_utterance_db()
+    udoc = udb[utterance_uuid]
+    if udoc is not None:
+        return {'timestamp':udoc['timestamp'], 
+                'content': udoc['content'], 
+                'referent': udoc['referent'],
+                'speaker': udoc['speaker'],
+                'locution': udoc['locution']}
 
 
