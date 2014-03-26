@@ -11,6 +11,7 @@ from flask import current_app
 
 import datastores
 import dataviews
+import dialogue_utils
 import utterances
 
 
@@ -26,8 +27,8 @@ def new_dialogue(speaker, content, locution, referent = None):
     udoc = utterances.new_utterance(speaker, content, locution, referent)
     udocid,rev = udb.save(udoc)
 
-    now = str(datetime.now().isoformat())
-    ddoc = {"created": now, "type": "dialogue" , "transcript":[ { "uid":udocid } ]}
+    ddoc = dialogue_utils.new_dialogue(udocid)
+
     ddocid,rev = ddb.save(ddoc)
     
     return ddocid
