@@ -89,7 +89,7 @@ def get_dialogues_count():
     return len( [db[_id].get('_id') for _id in db if db[_id].get('type') == "dialogue"] )
 
 
-def get_utterance(dialogue_uuid = None, utterance_uuid = None):
+def get_utterance(utterance_uuid = None):
     """
     Return the utterance identified by either:
         utterance_uuid & dialogue_uuid
