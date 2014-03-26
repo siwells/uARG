@@ -12,7 +12,7 @@ from flask import current_app
 import datastores
 import dataviews
 import dialogue_utils
-import utterances
+import utterance_utils
 
 
 def new_dialogue(speaker, content, locution, referent = None):
@@ -24,7 +24,7 @@ def new_dialogue(speaker, content, locution, referent = None):
     udb = datastores.get_utterance_db()
     ddb = datastores.get_dialogue_db()
 
-    udoc = utterances.new_utterance(speaker, content, locution, referent)
+    udoc = utterance_utils.new_utterance(speaker, content, locution, referent)
     udocid,rev = udb.save(udoc)
 
     ddoc = dialogue_utils.new_dialogue(udocid)
@@ -41,7 +41,7 @@ def add_utterance(dialogue, speaker, referent, content, locution):
     udb = datastores.get_utterance_db()
     ddb = datastores.get_dialogue_db()
 
-    udoc = utterances.new_utterance(speaker, content, locution, referent)
+    udoc = utterance_utils.new_utterance(speaker, content, locution, referent)
     udocid,rev = udb.save(udoc)
 
     ddoc = ddb[dialogue]
