@@ -98,12 +98,14 @@ def get_utterance(utterance_uuid = None):
         TODO: Add just utterance_uuid
     """
     udb = datastores.get_utterance_db()
-    udoc = udb[utterance_uuid]
-    if udoc is not None:
-        return {'timestamp':udoc['timestamp'], 
-                'content': udoc['content'], 
-                'referent': udoc['referent'],
-                'speaker': udoc['speaker'],
-                'locution': udoc['locution']}
-
+    try:
+        udoc = udb[utterance_uuid]
+        if udoc is not None:
+            return {'timestamp':udoc['timestamp'], 
+                    'content': udoc['content'], 
+                    'referent': udoc['referent'],
+                    'speaker': udoc['speaker'],
+                    'locution': udoc['locution']}
+    except couchdb.ResourceNotFound:
+        current_app.logger.error("Utterance Not Found for id"+utterance_uuid)
 
