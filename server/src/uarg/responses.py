@@ -7,8 +7,8 @@ def build_response(msg, status='ok', code=200, data=[], errors=[], _links={}):
     Build a response dict to return from the API
     """
     response = {}
-    response['status'] = status
-    response['code'] = code
+    #response['status'] = status
+    #response['code'] = code
     response['message'] = msg
     response['data'] = data
     response['_links'] = _links
