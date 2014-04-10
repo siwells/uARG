@@ -170,6 +170,10 @@ def utterance_id(dialogue_id = None, utterance_id = None):
             if utterance is not None:
                 data = utterance
                 msg = "Retrieved utterance #"+utterance_id
+            else:
+                error = responses.get_error("Utterance #"+utterance_id+" could not be found. It has either been deleted or never existed")
+                errors.append(error)
+                msg = "Something went wrong. Check the errors list for more details"
 
     response = responses.build_response(msg, status, code, data, errors, _links)
     current_app.logger.info( response )
