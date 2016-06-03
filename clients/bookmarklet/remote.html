@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+<div style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border: 1px solid black; width: 480px; margin:0 auto; background-color:white;   " >
+
+    <form name="form">
+    <fieldset>
+    <legend><a href="http://www.argublogging.com">uARG</a></legend>
+
+    <label>Service</label>
+
+    <div class="controls controls-row">
+    <!--<select class="span2" id="service">
+    <option>Posterous</option>
+    <option>Tumblr</option>
+    <option>Wordpress</option>
+    <option>Blogger</option>
+    </select>
+    -->
+        
+    <input class="span2" type="text" placeholder="username" id="username">
+    <input class="span2" type="password" placeholder="password" id="password">
+    </div>
+        
+    <label>Selected text to quote:</label>
+        <textarea rows="3" class="input-block-level" id="quoted_text"></textarea>
+
+        <label>Response: </label>
+
+        <select class="span2" id="response_type">
+        <option>Agree</option>
+        <option>Disagree</option>
+        <option>Support</option>
+        <option>Challenge</option>
+        <option>Elaborate</option>
+        </select>
+        
+        <textarea rows="3" class="input-block-level" id="response"></textarea>
+            
+        <button type="submit" class="btn pull-right" onClick='submit_form()'>Post Response</button>
+        <button type="button" class="btn pull-left" onClick='close_form()'>Close</button>
+    </fieldset>
+    </form>
+</div>
+
+    <script type='text/javascript' src="http://code.jquery.com/jquery.min.js"></script>
+    <script type='text/javascript' src="static/js/bootstrap.min.js"></script> 
+
+    <script>
+    var addr = location.href.split('?');
+    var args;
+    var data = {};
+    if(addr.length > 1)
+    {
+        args = addr[1].split('&');;
+        for(key in args)
+        {
+            data[args[key].split('=')[0]] = args[key].split('=')[1];
+        }
+    }
+
+    var quote = unescape(data['quote']);
+    var url = unescape(data['url']);
+    var title = unescape(data['title']);
+    var timestamp = new Date();
+    var uuid = guid();
+     
+
+    document.getElementById("username").value = 'user';
+    document.getElementById("password").value = 'pass';
+    document.getElementById("quoted_text").value = quote;
+    document.getElementById("response").value = '';
+     
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+             .toString(16)
+             .substring(1);
+    };
+
+    function guid() {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    };
+    
+    function submit_form() {
+    
+        response = new Object();
+//        response.service = document.getElementById("service").value;
+        response.username = document.getElementById("username").value;
+        response.password = document.getElementById("password").value;
+        response.quote = document.getElementById("quoted_text").value;
+        response.response_type = document.getElementById("response_type").value;
+        response.response_text = document.getElementById("response").value;
+        response.url = data['url'];
+        response.title = data['title'];
+        response.timestamp = new Date();
+        response.uuid = guid();
+        
+        console.log(JSON.stringify(response));
+        close_form();
+       
+        // Needs to call the ArgDB API
+//        $('form').submit(function() { $.ajax({url:'exampleurl.com/webservice.php', data: {region: 'NY'} }) .success(function(data) { /*do something with data });*/ });
+    };
+
+
+    function close_form()
+    {
+        var someIframe = window.parent.document.getElementById('my_iframe');
+        someIframe.parentNode.removeChild(window.parent.document.getElementById('my_iframe'));
+    }
+
+    </script>
+
+</body>
+</html>
